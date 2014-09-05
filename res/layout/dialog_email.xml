@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#55000000"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="210dip"
+        android:background="@drawable/dialogbackground" >
+
+        <Button
+            android:id="@+id/emailsendbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dip"
+            android:gravity="center"
+            android:text="@string/email_send"
+            android:textColor="#000000"
+            android:textSize="16sp" 
+            android:background="@drawable/wirt_bule_selector" />
+
+        <Button
+            android:id="@+id/emailprintbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/emailsendbutton"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:text="@string/email_print"
+            android:textColor="#000000"
+            android:textSize="16sp" 
+            android:background="@drawable/wirt_bule_selector" />
+
+        <Button
+            android:id="@+id/emailcancelbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/emailprintbutton"
+            android:layout_marginTop="20dip"
+            android:gravity="center"
+            android:text="@string/notes_cancel"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" 
+            android:background="@drawable/balk_bule_selector" />
+    </RelativeLayout>
+
+</LinearLayout>

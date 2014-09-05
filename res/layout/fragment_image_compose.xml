@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false" >
+
+        <ScrollView
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="2.0"
+            android:background="@drawable/mycompose_bg1"
+            android:fadingEdge="none"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <RadioGroup
+                    android:id="@+id/rgComposeType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/mycompose_bg1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+                </RadioGroup>
+            </LinearLayout>
+        </ScrollView>
+
+        <ListView
+            android:id="@+id/lvCompose"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="9.0"
+            android:background="@drawable/mycompose_bg2"
+            android:listSelector="@null" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" >
+
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/icon_home"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/icon_back" />
+    </RelativeLayout>
+
+</RelativeLayout>

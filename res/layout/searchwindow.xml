@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#55000000"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/searchlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="@drawable/searchbar2x" >
+
+        <LinearLayout
+            android:id="@+id/cancellayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" >
+
+            <Button
+                android:id="@+id/searchcancelbotton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/finish_selector"
+                android:gravity="center"
+                android:text="@string/notes_cancel"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/searchedittext"
+            android:layout_width="255dp"
+            android:layout_height="35dip"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@id/cancellayout"
+            android:background="@drawable/search"
+            android:drawableLeft="@drawable/searchbox"
+            android:hint="@string/notes_search"
+            android:paddingLeft="12dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/listlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="450dip"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="#B6B19F"
+            android:dividerHeight="1dp"
+            android:scrollingCache="false" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

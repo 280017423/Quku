@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+	android:gravity="center_vertical">
+    <RelativeLayout 
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
+        <SurfaceView
+        android:id="@+id/surface_camera"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         />
+        <ImageView 
+            android:id="@+id/autofoucs"
+            android:layout_width="156dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_height="156dp"
+            android:contentDescription="@string/app_name"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="128dp"
+        android:layout_height="fill_parent"
+        android:background="@drawable/camera_background"
+        android:orientation="vertical" >
+     <!--    <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical" >
+        </LinearLayout> -->
+        <Button
+            android:id="@+id/cameraButton"
+            android:layout_width="65dp"
+            android:layout_height="165dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/docamera_btn_selector" />
+        <Button
+            android:id="@+id/backhome"
+            android:layout_width="65dp"
+            android:layout_height="165dp"
+            android:layout_alignLeft="@+id/cameraButton"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/camera_back_btu" />
+    </RelativeLayout>
+</LinearLayout>

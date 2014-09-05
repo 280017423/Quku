@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#55000000"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="150dip"
+        android:background="@drawable/dialogbackground" >
+
+        <Button
+            android:id="@+id/deletedeletebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dip"
+            android:gravity="center"
+            android:text="@string/notes_deletenotes"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" 
+            android:background="@drawable/rad_bule_selector" />
+
+        <Button
+            android:id="@+id/deletecancelbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/deletedeletebutton"
+            android:layout_marginTop="20dip"
+            android:gravity="center"
+            android:text="@string/notes_cancel"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:background="@drawable/balk_bule_selector" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:id="@+id/fm_tool_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="80.0dip"
+        android:background="@drawable/fm_tool_background"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/tool_home"
+            style="@style/tool_bar_LinearLayout"
+            android:background="@drawable/tool_btu"
+            android:focusable="true" >
+
+            <TextView
+                style="@style/tool_bar_TextView"
+                android:text="@string/str_home" />
+
+            <ImageView
+                style="@style/tool_bar_ImageView"
+                android:background="@drawable/fm_home" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tool_level_up"
+            style="@style/tool_bar_LinearLayout"
+            android:background="@drawable/tool_btu"
+            android:focusable="true" >
+
+            <TextView
+                style="@style/tool_bar_TextView"
+                android:text="@string/str_level_up" />
+
+            <ImageView
+                style="@style/tool_bar_ImageView"
+                android:background="@drawable/fm_folder_next" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tool_new_folder"
+            style="@style/tool_bar_LinearLayout"
+            android:background="@drawable/tool_btu"
+            android:focusable="true" >
+
+            <TextView
+                style="@style/tool_bar_TextView"
+                android:text="创建目录" />
+
+            <ImageView
+                style="@style/tool_bar_ImageView"
+                android:background="@drawable/fm_new_folder" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tool_paste_file"
+            style="@style/tool_bar_LinearLayout"
+            android:background="@drawable/tool_btu"
+            android:focusable="true" >
+
+            <TextView
+                style="@style/tool_bar_TextView"
+                android:text="粘贴" />
+
+            <ImageView
+                style="@style/tool_bar_ImageView"
+                android:background="@drawable/fm_new_folder" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tool_bar_save_file"
+            style="@style/tool_bar_LinearLayout"
+            android:background="@drawable/tool_btu"
+            android:focusable="true" >
+
+            <TextView
+                style="@style/tool_bar_TextView"
+                android:text="保存乐谱文件" />
+
+            <ImageView
+                style="@style/tool_bar_ImageView"
+                android:background="@drawable/fm_new_folder" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tool_bar_continue"
+            style="@style/tool_bar_LinearLayout"
+            android:background="@drawable/tool_btu"
+            android:focusable="true" >
+
+            <TextView
+                style="@style/tool_bar_TextView"
+                android:text="继续拍摄" />
+
+            <ImageView
+                style="@style/tool_bar_ImageView"
+                android:background="@drawable/fm_new_folder" />
+        </LinearLayout>
+    </LinearLayout>
+
+</HorizontalScrollView>

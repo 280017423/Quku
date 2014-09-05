@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        layout="@layout/layout_fm_tool_bar"
+        android:focusable="true" />
+    <!-- listview区域 -->
+
+    <ListView
+        android:id="@+id/filelist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/foot_layout"
+        android:layout_below="@id/head_layout"
+        android:background="@color/white"
+        android:cacheColorHint="@color/translucent_white"
+        android:divider="#ffd6d2b1"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="false"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0.0dip"
+        android:listSelector="@android:color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/foot_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:background="#E066FF" >
+
+        <TextView
+            android:id="@+id/currentpath"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</RelativeLayout>

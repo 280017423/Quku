@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="500dp"
+    android:layout_height="250dp"
+    android:orientation="vertical" >
+
+    <!-- label+录音保存时文件名布局 -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="#A2A2A2" >
+
+        <Button
+            android:id="@+id/recordlistbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/btn_record_list" />
+
+        <TextView
+            android:id="@+id/recordsavefile"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/recordlistbtn"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/end2play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/recordsavefile"
+            android:text="播放"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btnhide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="隐藏" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#515151" >
+    </View>
+    <!-- 录音icon+录音时间布局 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="fill_parent"
+            android:background="#8F8F8F"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/recordicon" />
+
+            <TextView
+                android:id="@+id/recordtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00:00"
+                android:textSize="20px" />
+
+            <TextView
+                android:id="@+id/recordstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="#515151" >
+        </View>
+        <!-- android:background="#515151" -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#8F8F8F"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnrecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_rekam" />
+
+            <Button
+                android:id="@+id/recordstop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_stop" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 录音操作按钮布局 -->
+
+</LinearLayout>

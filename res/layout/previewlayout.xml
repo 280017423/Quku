@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="768dp"
+        android:layout_height="1240dp"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <!-- 进度条 -->
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/camera_pre_background"
+        android:gravity="center_vertical" >
+
+        <!-- android:text="重拍" -->
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/shutter_selector_btu"
+            android:text="重拍" />
+        <!-- android:text="保存" -->
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/shutter_selector_btu"
+            android:text="保存" />
+    </RelativeLayout>
+
+</LinearLayout>

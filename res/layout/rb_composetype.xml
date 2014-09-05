@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="25.0dip"
+    android:background="@drawable/selector_compose_type_rb"
+    android:button="@null"
+    android:ellipsize="none"
+    android:gravity="center"
+    android:paddingLeft="5.0dip"
+    android:paddingRight="5.0dip"
+    android:singleLine="true"
+    android:text="西洋乐器"
+    android:textColor="@color/text_composename_color"
+    android:textSize="25.0sp" />

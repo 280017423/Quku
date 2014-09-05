@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/body"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="@drawable/topbar" >
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/notes_selector"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:text="@string/back_note"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/bodytitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/notes_title"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/addbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/add_selector" />
+
+        <Button
+            android:id="@+id/cancelbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/finish_selector"
+            android:gravity="center"
+            android:text="@string/notes_cancel"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/searchlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:layout_marginTop="-2dp"
+        android:background="@drawable/searchbar2x"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <EditText
+            android:id="@+id/searchtext"
+            android:layout_width="fill_parent"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:background="@drawable/search"
+            android:drawableLeft="@drawable/searchbox"
+            android:ellipsize="start"
+            android:focusable="false"
+            android:hint="@string/notes_search"
+            android:paddingLeft="12dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/edgebottom" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="#B6B19F"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="false"
+        android:scrollingCache="false" >
+    </ListView>
+
+</LinearLayout>

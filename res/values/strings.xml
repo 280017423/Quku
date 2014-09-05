@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+     <string name="hello">Hello World, MusicView!</string>
+    <string name="app_name">曲库</string>
+    <string name="search_hint">输入要搜索的乐谱名...</string>
+    <string name="str_home">主页</string>
+    <string name="str_level_up">上一层</string>
+    <!-- 文件管理器-图片预览 -->
+    <string name="live_folder_name">备忘录</string>
+    <string name="back_note">返回</string>
+    <string name="title_edit_title">Note title:</string>
+    <string name="title_create">Create note</string>
+    <string name="title_edit">Edit: \"%1$s\"</string>
+    <string name="title_notes_list">我的乐谱</string>
+    <string name="notes_edit_title">新建乐谱</string>
+    <string name="notes_title">我的乐谱</string>
+    <string name="notes_finish">完成</string>
+    <string name="notes_search">搜索</string>
+    <string name="notes_cancel">取消</string>
+    <string name="notes_delete">删除</string>
+    <string name="notes_deletenotes">删除备忘录</string>
+    <string name="notes_add">十</string>
+    <string name="email_print">打印</string>
+    <string name="email_send">用电子邮件发送</string>
+    <string name="notes_add2">十</string>
+    
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
+    <string name="daybeffer">天前</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    
+    
+    <string name="menu_add">Add note</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_open">Open</string>
+    <string name="menu_revert">Revert changes</string>
+    <string name="menu_discard">Discard</string>
+    
+    <string name="button_ok">OK</string>  
+    <string name="text_title">Title:</string>
+    
+    <string name="resolve_edit">Edit note</string>
+    <string name="resolve_title">Edit title</string>
+    
+    <string name="error_title">Error</string>
+    <string name="error_message">Error loading note</string>
+    <string name="nothing_to_save">There is nothing to save</string>
+    <string name="week1">星期一</string>
+    <string name="week2">星期二</string>
+    <string name="week3">星期三</string>
+    <string name="week4">星期四</string>
+    <string name="week5">星期五</string>
+    <string name="week6">星期六</string>
+    <string name="week7">星期日</string>
+    
+    <!-- 键盘 -->
+    <string name="keyboard_close">关闭</string>
+    
+    <!-- 文件列表操作 -->
+    <string name="fileList_title">"文件编辑操作"</string>
+    <string name="alert_dialog_ok">确认</string>
+    <string name="alert_dialog_cancel">取消</string>
+    <string name="fileList_createDir">"创建目录"</string>
+     <string name="alert_dialog_rename_file_title">重命名</string>
+    <string name="alert_dialog_del_file_title">确认删除当前文件</string>
+    <string name="alert_dialog_del_dir_title">确认删除当前目录,删除后目录所有信息将会清空</string>
+    <string name="alert_dialog_savefile_title">乐谱文件保存</string>
+    
+    <!-- 备忘录手写 -->
+    <string name="alert_config_note_bg_title">是否替换当前背景，一旦替换当前画板信息将会清空？</string>
+    <!-- 软件更新 -->
+    <string name="software_update_info">    妙派音乐乐谱版本功能介绍：\n
+
+一、高清乐谱能够海量储存，乐谱可以通过拍照或扫描轻松录入，详细分类，随意查找。\n
+
+二、13.3寸的完美大屏，乐谱调光暗亮自如，灵敏触摸及超长待机，时尚轻薄尽显尊贵。\n
+
+三、页码点选随点随看,触屏翻页轻松随意，更可以通过无线脚踏器翻页，免去手动翻页的麻烦，尽情自如的演绎。\n
+
+四、在乐谱上还能自如书写犹如纸张，颜色及笔划粗细可以随心所欲选择，橡皮涂擦也易改易修保存恢复一点即可。\n
+
+五、内置节拍器方便省事，快慢任意调节，节拍准确声音清晰，让学习更添妙趣。\n
+六、妙派支持3G及无线上网，平板电脑的各类功能应有尽有。</string>
+
+<!-- 文件管理器-图片预览 -->
+<string name="edit" msgid="1502273844748580847">"编辑"</string>
+<string name="cancel" msgid="3637516880917356226">"取消"</string>
+<string name="photoedit_exit">"返回"</string>
+</resources>

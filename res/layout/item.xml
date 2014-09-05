@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="70dp"
+    android:background="@drawable/layout_notewrite_item" >
+
+    <LinearLayout
+        android:id="@+id/buttonlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/deletebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/delete"
+            android:gravity="center"
+            android:text="@string/notes_delete"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:src="@drawable/listarrow1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="#E97F39"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@id/buttonlayout"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="#A2A2A2"
+        android:textSize="15sp" />
+
+</RelativeLayout>

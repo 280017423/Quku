@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="80.0dp"
+        android:paddingRight="80.0dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100.0dip"
+            android:src="@drawable/main_quku" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp" >
+
+            <ImageButton
+                android:id="@+id/ibMy_compose"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/my_compose" />
+
+            <ImageButton
+                android:id="@+id/ibCompose_manager"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/compose_manager" />
+
+            <ImageButton
+                android:id="@+id/_ibDown_compose"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/down_compose" />
+
+            <ImageButton
+                android:id="@+id/ibTake_compose"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/take_compose" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@drawable/devide_book" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="我的乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="乐谱管理"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="下载乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="拍摄乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80.0dip" >
+
+            <ImageButton
+                android:id="@+id/ibOperation"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/operation" />
+
+            <ImageButton
+                android:id="@+id/ibCreate_compose"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/create_compose" />
+
+            <ImageButton
+                android:id="@+id/ibMy_pc"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/my_pc" />
+
+            <ImageButton
+                android:id="@+id/ibRecord_audio"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/record_audio" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@drawable/devide_book" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="操作指南"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="创作乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="我的电脑"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="录音管理"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80.0dip" >
+
+            <ImageButton
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/icon_dictionary" />
+
+            <ImageButton
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/icon_course" />
+
+            <ImageButton
+                android:id="@+id/ibSetting"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/icon_device" />
+
+            <ImageButton
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/record_audio"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@drawable/devide_book" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="电子词典"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="精品教材"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="设备管理"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="录音管理"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <LinearLayout
+            android:id="@+id/ll_tab_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/ibMy_compose2"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/my_compose" />
+
+            <ImageButton
+                android:id="@+id/ibCompose_manager2"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/compose_manager" />
+
+            <ImageButton
+                android:id="@+id/ibDown_compose2"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/down_compose" />
+
+            <ImageButton
+                android:id="@+id/ibTake_compose2"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:src="@drawable/take_compose" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_tab_layout"
+            android:background="@drawable/devide_bottom"
+            android:gravity="bottom" >
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="我的乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="乐谱管理"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="下载乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:text="拍摄乐谱"
+                android:textColor="@color/main_textcolor"
+                android:textSize="25.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

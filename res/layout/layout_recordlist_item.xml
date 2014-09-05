@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="80dp"
+    android:background="@color/white"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+
+    <TextView
+        android:id="@+id/recordfilename"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:drawableLeft="@drawable/recordicon"
+        android:drawablePadding="10.0dip"
+        android:gravity="center_vertical"
+        android:textColor="#ff767676"
+        android:textSize="20.0sp" />
+
+    <TextView
+        android:id="@+id/recordfilesize"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:textColor="#ff767676" />
+
+</RelativeLayout>

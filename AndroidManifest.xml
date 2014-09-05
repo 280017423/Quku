@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.quku"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.autofocus" />
+
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 授予使用外部存储器的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 乐谱 -->
+    <application
+        android:name="com.quku.MyApplication"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.Black.NoTitleBar" >
+
+        <!-- 使用说明 -->
+        <activity
+            android:name="com.quku.activity.OpenWebViewActivity"
+            android:hardwareAccelerated="true" >
+        </activity>
+        <activity
+            android:name="com.quku.activity.MyMusicSheetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged" />
+        <activity android:name="com.quku.UserHelpActivity" >
+        </activity>
+        <activity android:name="com.quku.UserHelpNextPagActivity" >
+        </activity>
+        <activity
+            android:name="com.quku.activity.PictureBrowers"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.quku.MyBook"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name="com.quku.PaintLine"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.quku.activity.MoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.quku.activity.MianActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.quku.BootBroadcastReceiverMusic" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- 备忘录手写 -->
+        <activity
+            android:name="com.quku.activity.MyNoteListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.quku.activity.CreateNoteActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.quku.activity.NoteChoiceActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 备忘录 文本 -->
+        <provider
+            android:name=".note.NotePadProvider"
+            android:authorities="com.quku.note.NotePad" />
+
+        <activity android:name=".note.NotesList" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.dir/vnd.google.note" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.item/vnd.google.note" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".note.NoteEditor"
+            android:configChanges="keyboardHidden|orientation" >
+            <intent-filter android:label="@string/resolve_edit" >
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="com.android.notes.action.EDIT_NOTE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.item/vnd.google.note" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.dir/vnd.google.note" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".note.Searchwindow" >
+        </activity>
+        <!-- 拍照 -->
+        <activity
+            android:name=".camera.CameraActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+
+            <!--
+                 <intent-filter> <action android:name="android.intent.action.MAIN" 
+				/> <category android:name="android.intent.category.LAUNCHER" /> </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".camera.GalleryActivity" >
+        </activity>
+        <activity
+            android:name="com.quku.activity.FileManagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".adapter.PreViewImgActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <!-- 文件管理器 gallery -->
+        <activity
+            android:name=".gallery.photoedit.PhotoEditor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+
+                <data android:mimeType="image/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 录音列表 -->
+        <activity
+            android:name="com.quku.activity.RecordListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+
+        <uses-library
+            android:name="com.google.android.media.effects"
+            android:required="false" />
+    </application>
+
+    <supports-screens android:largeScreens="true" />
+
+</manifest>

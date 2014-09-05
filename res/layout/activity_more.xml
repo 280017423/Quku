@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical" >
+
+    <include layout="@layout/view_common_title" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_set_1"
+        android:drawablePadding="10.0dip"
+        android:drawableRight="@drawable/listarrow"
+        android:gravity="center_vertical"
+        android:paddingBottom="20.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="25.0dip"
+        android:paddingTop="20.0dip"
+        android:text="中英文切换"
+        android:textColor="#ff767676"
+        android:textSize="20.0sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffd6d2b1" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_set_2"
+        android:drawablePadding="10.0dip"
+        android:drawableRight="@drawable/listarrow"
+        android:gravity="center_vertical"
+        android:paddingBottom="20.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="25.0dip"
+        android:paddingTop="20.0dip"
+        android:text="系统升级"
+        android:textColor="#ff767676"
+        android:textSize="20.0sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffd6d2b1" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_set_3"
+        android:drawablePadding="10.0dip"
+        android:drawableRight="@drawable/listarrow"
+        android:gravity="center_vertical"
+        android:paddingBottom="20.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="25.0dip"
+        android:paddingTop="20.0dip"
+        android:text="意见反馈"
+        android:textColor="#ff767676"
+        android:textSize="20.0sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffd6d2b1" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_set_4"
+        android:drawablePadding="10.0dip"
+        android:drawableRight="@drawable/listarrow"
+        android:gravity="center_vertical"
+        android:paddingBottom="20.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="25.0dip"
+        android:paddingTop="20.0dip"
+        android:text="关于"
+        android:textColor="#ff767676"
+        android:textSize="20.0sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffd6d2b1" />
+
+</LinearLayout>

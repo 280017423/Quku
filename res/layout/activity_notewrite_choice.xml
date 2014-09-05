@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical" >
+
+    <include layout="@layout/view_common_title" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bookshelf"
+        android:paddingBottom="25.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip" >
+
+        <ImageButton
+            android:id="@+id/note_write_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/compose_type1" />
+
+        <ImageButton
+            android:id="@+id/note_write_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/compose_type2" />
+
+        <ImageButton
+            android:id="@+id/note_write_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/compose_type3" />
+
+        <ImageButton
+            android:id="@+id/note_write_streak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/compose_type4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bookshelf"
+        android:paddingBottom="25.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bookshelf"
+        android:paddingBottom="25.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip" />
+
+</LinearLayout>

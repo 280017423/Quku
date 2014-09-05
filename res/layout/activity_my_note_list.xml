@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/view_common_title" />
+
+    <LinearLayout
+        android:id="@+id/searchlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:layout_marginTop="-2dp"
+        android:background="@drawable/searchbar2x"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <EditText
+            android:id="@+id/searchtext"
+            android:layout_width="fill_parent"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:background="@drawable/search"
+            android:drawableLeft="@drawable/searchbox"
+            android:ellipsize="start"
+            android:focusable="false"
+            android:hint="@string/notes_search"
+            android:paddingLeft="12dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:cacheColorHint="@color/translucent_white"
+        android:divider="#ffd6d2b1"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="false"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0.0dip"
+        android:listSelector="@android:color/transparent" >
+    </ListView>
+
+</LinearLayout>
