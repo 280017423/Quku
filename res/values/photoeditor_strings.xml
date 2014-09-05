@@ -15,9 +15,6 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Name for the photo editing activity to edit the selected photo. [CHAR LIMIT=NONE] -->
-    <string name="photoeditor_name">Photo Studio</string>
-
     <!-- Toast shown when selected photo could not be loaded. [CHAR LIMIT=40] -->
     <string name="loading_failure">Photo cannot be loaded</string>
 
@@ -59,12 +56,6 @@
 
     <!-- Name for the photo effect that makes photo only two color tones. [CHAR LIMIT=15] -->
     <string name="duotone">Duo-tone</string>
-
-    <!-- Name for the photo effect that smooths facial skins. [CHAR LIMIT=15] -->
-    <string name="facelift">Face Glow</string>
-
-    <!-- Name for the photo effect that tans facial skins. [CHAR LIMIT=15] -->
-    <string name="facetan">Face Tan</string>
 
     <!-- Name for the photo effect that fills back-light. [CHAR LIMIT=15] -->
     <string name="filllight">Fill Light</string>

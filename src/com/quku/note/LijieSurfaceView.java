@@ -381,7 +381,7 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 		float fDX = mOrig[(iFarestCornerY * (WIDTH + 1) + iFarestCornerX) * 2] - mOrig[(iApY * (WIDTH + 1) + iApX) * 2];
 		float fDY = mOrig[(iFarestCornerY * (WIDTH + 1) + iFarestCornerX) * 2 + 1]
 				- mOrig[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
-		float fDistanceFarestCornerToAp = FloatMath.sqrt(((fDX * fDX) + (fDY * fDY)));
+		float fDistanceFarestCornerToAp = (float) Math.sqrt(((fDX * fDX) + (fDY * fDY)));
 		mfMoveSpeed = (fDistanceFarestCornerToAp + 100) * 1000 / iDurationMs;
 		mfTimeStep = iTimeStepMs;
 		mfDurationTime = iDurationMs;
@@ -432,7 +432,7 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 					float fCurrentDeltaY = dst[(y * (WIDTH + 1) + x) * 2 + 1]
 							- src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
 
-					float fOrigDistance = FloatMath.sqrt(fOrigDeltaX * fOrigDeltaX + fOrigDeltaY * fOrigDeltaY);
+					float fOrigDistance = (float) Math.sqrt(fOrigDeltaX * fOrigDeltaX + fOrigDeltaY * fOrigDeltaY);
 					// float fCurrentDistance =
 					// FloatMath.sqrt(fCurrentDeltaX*fCurrentDeltaX +
 					// fCurrentDeltaY*fCurrentDeltaY);

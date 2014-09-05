@@ -16,13 +16,13 @@ package com.quku.gallery.photoedit;
  * the License.
  */
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -36,7 +36,7 @@ public abstract class RestorableView extends FrameLayout {
 	private static final float ENABLED_ALPHA = 1;
 	private static final float DISABLED_ALPHA = 0.47f;
 
-	private final HashMap<Integer, Runnable> clickRunnables = new HashMap<Integer, Runnable>();
+	private final SparseArray<Runnable> clickRunnables = new SparseArray<Runnable>();
 	private final HashSet<Integer> changedViews = new HashSet<Integer>();
 	private final LayoutInflater inflater;
 
@@ -68,9 +68,8 @@ public abstract class RestorableView extends FrameLayout {
 		View view = getChildAt(0);
 		recreateChildView();
 
-		// Restore its runnables and status of views that have been changed.
-		for (Entry<Integer, Runnable> entry : clickRunnables.entrySet()) {
-			setClickRunnable(entry.getKey(), entry.getValue());
+		for (int i = 0; i < clickRunnables.size(); i++) {
+			setClickRunnable(i, clickRunnables.get(i));
 		}
 		for (int id : changedViews) {
 			View changed = view.findViewById(id);

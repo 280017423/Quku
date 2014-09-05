@@ -1,21 +1,5 @@
 package com.quku.note;
 
-/*
- * Copyright (C) 2007 The Android Open Source Project
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,18 +42,9 @@ import com.quku.note.LijieSurfaceView.MeshFinishListener;
 import com.quku.note.NotePad.NoteColumns;
 import com.quku.note.PageWidget.OnPageScrollFinishedListener;
 
-/**
- * A generic activity for editing a note in a database. This can be used either
- * to simply view a note {@link Intent#ACTION_VIEW}, view and edit a note
- * {@link Intent#ACTION_EDIT}, or create a new note {@link Intent#ACTION_INSERT}
- * .
- */
 public class NoteEditor extends Activity implements MeshFinishListener, OnPageScrollFinishedListener {
 	private static final String TAG = "NoteEditor";
 
-	/**
-	 * Standard projection for the interesting columns of a normal note.
-	 */
 	private static final String[] PROJECTION = new String[] { NoteColumns._ID, // 0
 			NoteColumns.NOTE, // 1
 			NoteColumns.TITLE, // 2
@@ -83,8 +58,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 	private static final int COLUMN_INDEX_TITLE = 2;
 	/** The index of the created date column */
 	private static final int COLUMN_INDEX_CREATED_DATE = 3;
-	/** The index of the modified date column */
-	private static final int COLUMN_INDEX_MODIFIED_DATE = 4;
 
 	// This is our state data that is stored when freezing.
 	private static final String ORIGINAL_CONTENT = "origContent";
@@ -111,7 +84,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 	private ArrayList<String> modifiedlist = new ArrayList<String>();
 	private int id;
 	private PageWidget mPageWidget;
-	private Dialog emailDialog;
 	private Dialog deleteDialog;
 	private LijieSurfaceView mMeshView;
 	private LinearLayout mianLinLayout;
@@ -134,19 +106,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 			mPaint.setStrokeWidth(2);
 			mPaint.setColor(0x80AAAAAA);
 		}
-
-		// @Override
-		// protected void onDraw(Canvas canvas) {
-		// int count = (getLineCount() > 16 ? getLineCount() : 17);
-		// Rect r = mRect;
-		// Paint paint = mPaint;
-		//
-		// // for (int i = 1; i < count + 1; i++) {
-		// // int baseline = getLineBounds(0, r) + 4;
-		// // canvas.drawLine(0, baseline * i, r.right, baseline * i ,paint);
-		// // }
-		// super.onDraw(canvas);
-		// }
 	}
 
 	@Override
@@ -154,20 +113,15 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().getDecorView().setSystemUiVisibility(4);
-		// Set the layout for this activity. You can find it in
-		// res/layout/note_editor.xml
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mContentView = (ViewGroup) inflater.inflate(R.layout.note_editor, null);
 		setContentView(mContentView);
 
-		// The text view for our note, identified by its ID in the XML file.
 		mianLinLayout = (LinearLayout) findViewById(R.id.mianlayout);
 		mText = (EditText) findViewById(R.id.note);
 		mText.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				// Toast.makeText(MusicView.this, String.valueOf(actionId),
-				// Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -234,30 +188,20 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 			arrowLeftView.setEnabled(false);
 			arrowRightView.setEnabled(false);
 			trashView.setEnabled(false);
-
-			// If we were unable to create a new note, then just finish
-			// this activity. A RESULT_CANCELED will be sent back to the
-			// original activity if they requested a result.
 			if (mUri == null) {
 				Log.e(TAG, "Failed to insert new note into " + getIntent().getData());
 				finish();
 				return;
 			}
-
-			// The new entry was created, so assume all will end well and
-			// set the result to be returned.
 			setResult(RESULT_OK, (new Intent()).setAction(mUri.toString()));
 
 		} else {
-			// Whoops, unknown action! Bail.
-			Log.e(TAG, "Unknown action, exiting");
 			finish();
 			return;
 		}
 
 		// Get the note!
 		mCursor = managedQuery(mUri, PROJECTION, null, null, null);
-		// get the original text it started with.
 		if (savedInstanceState != null) {
 			mOriginalContent = savedInstanceState.getString(ORIGINAL_CONTENT);
 		}
@@ -266,12 +210,10 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 		finishButton.setOnClickListener(new MyOnClickListener());
 
 		arrowLeftView.setOnClickListener(new MyOnClickListener());
-		// emailView.setOnClickListener(new MyOnClickListener());
 		trashView.setOnClickListener(new MyOnClickListener());
 		arrowRightView.setOnClickListener(new MyOnClickListener());
 
 		arrowLeftView.setOnTouchListener(new MyOnTouchListener());
-		// emailView.setOnTouchListener(new MyOnTouchListener());
 		trashView.setOnTouchListener(new MyOnTouchListener());
 		arrowRightView.setOnTouchListener(new MyOnTouchListener());
 	}
@@ -284,19 +226,8 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// If we didn't have any trouble retrieving the data, it is now
-		// time to get at the stuff.
 		if (mCursor != null && mCursor.getCount() != 0) {
-			// Requery in case something changed while paused (such as the
-			// title)
-			// mCursor.requery();
-			// Make sure we are at the one and only row in the cursor.
-			Log.d(TAG, "mCursor.requery() =" + mCursor.requery());
-			Log.d(TAG, "moveToFirst =" + mCursor.moveToFirst());
-
-			// Modify our overall title depending on the mode we are running in.
 			if (mState == STATE_EDIT) {
-				// Set the title of the Activity to include the note title
 				if (mCursor.getCount() != 0) {
 					String title = mCursor.getString(COLUMN_INDEX_TITLE);
 					editorTitle.setText(title);
@@ -386,9 +317,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 
 			String mtext = mText.getText().toString().trim();
 			int length = mtext.length();
-			System.out.println("length====" + length);
-			// If we are creating a new note, then we want to also create
-			// an initial title for it.
 			if (mState == STATE_INSERT) {
 				String title = mtext.substring(0, Math.min(16, length));
 				if (length > 16) {
@@ -407,21 +335,12 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 				}
 			}
 			values.put(NoteColumns.TITLE, title);
-
-			// Write our text back into the provider.
 			values.put(NoteColumns.NOTE, mtext);
-
-			// Commit all of our changes to persistent storage. When the update
-			// completes
-			// the content provider will notify the cursor of the change, which
-			// will
-			// cause the UI to be updated.
 			try {
 				getContentResolver().update(mUri, values, null, null);
 			} catch (NullPointerException e) {
 				Log.e(TAG, e.getMessage());
 			}
-
 		}
 	}
 
@@ -526,34 +445,9 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 
 		public void onClick(View view) {
 			switch (view.getId()) {
-				case R.id.emailsendbutton:
-					break;
-				case R.id.emailprintbutton:
-					break;
-				case R.id.emailcancelbutton:
-					emailDialog.dismiss();
-					break;
 				case R.id.deletedeletebutton:
 					deleteDialog.dismiss();
-
-					/*
-					 * 屏蔽动画 mContentView.setDrawingCacheEnabled(true); Bitmap
-					 * bitmap = mContentView.getDrawingCache(); mMeshView = new
-					 * LijieSurfaceView(NoteEditor.this, bitmap, bitmap);
-					 * mMeshView.setOnMeshFinishListener(NoteEditor.this);
-					 * mContentView.destroyDrawingCache();
-					 * mContentView.addView(mMeshView, new
-					 * LayoutParams(LayoutParams.MATCH_PARENT,
-					 * LayoutParams.MATCH_PARENT)); bitmap.recycle();
-					 * startMesh();
-					 */
-					// mMeshView.invalidate();
-					// mContentView.invalidate();
 					deleteNote();
-					// Intent intentmain = new Intent();
-					// intentmain.setClass(NoteEditor.this, NotesList.class);
-					// NoteEditor.this.startActivity(intentmain);
-					// finish();
 					if (id >= 0 && (id + 1) < titlelist.size() && (titlelist.size() != 1)) {
 						int i = id + 1;
 						int noteid = Integer.valueOf(idlist.get(i));
@@ -620,24 +514,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 						case MotionEvent.ACTION_UP:
 							view.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrowleft));
 							if (id > 0 && id <= titlelist.size() && (titlelist.size() != 0) && (titlelist != null)) {
-
-								// mContentView.setDrawingCacheEnabled(true);
-								// Bitmap bitmap =
-								// mContentView.getDrawingCache();
-								// System.out.println(" bitmap ...........>" +
-								// bitmap);
-								// mPageWidget = new PageWidget(NoteEditor.this,
-								// bitmap);
-								// mContentView.addView(mPageWidget, new
-								// ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-								// ViewGroup.LayoutParams.MATCH_PARENT));
-								// mPageWidget.setBitmaps(bitmap, bitmap);
-								// mPageWidget.autoDisPaly();
-								// mPageWidget.setOnPageScrollFinishedListener(NoteEditor.this);
-								// mContentView.destroyDrawingCache();
-								// bitmap.recycle();
-								// mContentView.destroyDrawingCache();
-
 								int i = --id;
 								int noteid = Integer.valueOf(idlist.get(i));
 								String editTitle = titlelist.get(i);
@@ -894,11 +770,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 		}
 	}
 
-	private void startMesh() {
-		mMeshView.setApXYDuration(5, 19, 1000, 25);
-		// mMeshView.startMesh(null);
-	}
-
 	public void onFinished() {
 		if (mMeshView != null) {
 			mContentView.removeView(mMeshView);
@@ -907,7 +778,6 @@ public class NoteEditor extends Activity implements MeshFinishListener, OnPageSc
 	}
 
 	public void onPageScrollFinished(View v) {
-		// TODO Auto-generated method stub
 		if (mPageWidget != null) {
 			mContentView.removeView(mPageWidget);
 			mPageWidget = null;

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="广板              40-60\n小广板          60-66\n慢板              66-76\n行板              76-108\n中板              108-120\n快板              120-168\n急板              168-200\n最急板          200-208\n"
-        android:textSize="20px" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/txt1"
