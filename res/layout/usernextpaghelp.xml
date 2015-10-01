@@ -8,8 +8,8 @@
         android:id="@+id/enter_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="515px"
-        android:layout_y="1225px"
+        android:layout_x="260dp"
+        android:layout_y="612dp"
         android:background="@drawable/enter_back" />
 
 </AbsoluteLayout>

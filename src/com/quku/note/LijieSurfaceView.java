@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.FloatMath;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -63,41 +62,41 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message message) {
 			switch (message.what) {
-				case MSG_MESH:
-					// long befoer = System.currentTimeMillis();
-					// System.out.println("handleMessage befor time=============================="
-					// + befoer);
-					// System.out.println("MSG_MESH....mfDurationTime=" +
-					// mfDurationTime);
-					// System.out.println("MSG_MESH....mfCurrentTime=" +
-					// mfCurrentTime);
-					// System.out.println("MSG_MESH....mfTimeStep=" +
-					// mfTimeStep);
-					if (mfCurrentTime >= mfDurationTime) {
-						mHandler.removeMessages(MSG_MESH);
-						if (mListener != null) {
-							mListener.onFinished();
-						}
-						// reset();
-						break;
-					}
+			case MSG_MESH:
+				// long befoer = System.currentTimeMillis();
+				// System.out.println("handleMessage befor time=============================="
+				// + befoer);
+				// System.out.println("MSG_MESH....mfDurationTime=" +
+				// mfDurationTime);
+				// System.out.println("MSG_MESH....mfCurrentTime=" +
+				// mfCurrentTime);
+				// System.out.println("MSG_MESH....mfTimeStep=" +
+				// mfTimeStep);
+				if (mfCurrentTime >= mfDurationTime) {
 					mHandler.removeMessages(MSG_MESH);
-					// mHandler.sendEmptyMessageDelayed(MSG_MESH, 1);
-					mHandler.sendEmptyMessageDelayed(MSG_MESH, (int) mfTimeStep);
-
-					warp_lijie();
-					invalidate();
-
-					mfCurrentTime += mfTimeStep;
-					// long after = System.currentTimeMillis();
-					// System.out.println("handleMessage after time========================="
-					// + after);
-					// System.out.println("handleMessage dele time=========================="
-					// + (after - befoer));
+					if (mListener != null) {
+						mListener.onFinished();
+					}
+					// reset();
 					break;
+				}
+				mHandler.removeMessages(MSG_MESH);
+				// mHandler.sendEmptyMessageDelayed(MSG_MESH, 1);
+				mHandler.sendEmptyMessageDelayed(MSG_MESH, (int) mfTimeStep);
 
-				default:
-					break;
+				warp_lijie();
+				invalidate();
+
+				mfCurrentTime += mfTimeStep;
+				// long after = System.currentTimeMillis();
+				// System.out.println("handleMessage after time========================="
+				// + after);
+				// System.out.println("handleMessage dele time=========================="
+				// + (after - befoer));
+				break;
+
+			default:
+				break;
 			}
 		};
 	};
@@ -153,12 +152,14 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 		for (int i = 0; i < miPreDrawFrameAmount; i++) {
 			// mPreDrawFrame[i] = Bitmap.createBitmap(540, 960,
 			// Bitmap.Config.ARGB_8888);
-			mPreDrawFrame[i] = Bitmap.createBitmap(640, 960, Bitmap.Config.RGB_565);
+			mPreDrawFrame[i] = Bitmap.createBitmap(640, 960,
+					Bitmap.Config.RGB_565);
 			Canvas cvFrame = new Canvas(mPreDrawFrame[i]);
 			// cvFrame.drawColor(0x00FFFFFF);
 			cvFrame.drawBitmap(mBitmapBg, 0, 0, null);
 			warp_lijie();
-			cvFrame.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+			cvFrame.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0,
+					null);
 			mfCurrentTime += mfTimeStep;
 		}
 		mfCurrentTime = CurrentTimeTemp;
@@ -166,7 +167,8 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 	}
 
 	// @Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
 
 	}
 
@@ -280,7 +282,8 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 						// c = surfaceHolder.lockCanvas(null);
 						c = surfaceHolder.lockCanvas(new Rect(0, 0, 640, 910));
 						long mlCurrentFrameTimeMs = System.currentTimeMillis();
-						long mlFrameDelay = mlCurrentFrameTimeMs - mlLastFrameTimeMs;
+						long mlFrameDelay = mlCurrentFrameTimeMs
+								- mlLastFrameTimeMs;
 						mlFrameInterval[miFrameIntervalAmount] = mlFrameDelay;
 						miFrameIntervalAmount++;
 						if (mbTryBestToDraw) { // ��f������֡������
@@ -295,7 +298,9 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 							{
 								// c.drawColor(Color.BLACK);
 								if (mPreDrawFrame[miNextPreDrawFrame] != null) {
-									c.drawBitmap(mPreDrawFrame[miNextPreDrawFrame], 0, 0, null);
+									c.drawBitmap(
+											mPreDrawFrame[miNextPreDrawFrame],
+											0, 0, null);
 									mPreDrawFrame[miNextPreDrawFrame].recycle();
 								}
 								mPreDrawFrame[miNextPreDrawFrame] = null;
@@ -334,13 +339,15 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 			if (mfCurrentTime < mfDurationTime) {
 				warp_lijie();
 				c.drawBitmap(mBitmapBg, 0, 0, null);
-				c.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+				c.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0,
+						null);
 			} else {
 				mfCurrentTime = 0;
 				if (mbRepeatForever) {
 					c.drawBitmap(mBitmapBg, 0, 0, null);
 					warp_lijie();
-					c.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null, 0, null);
+					c.drawBitmapMesh(mBitmap, WIDTH, HEIGHT, mVerts, 0, null,
+							0, null);
 				} else {
 					if (mListener != null) {
 						mListener.onFinished();
@@ -356,7 +363,8 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 		array[index * 2 + 1] = y;
 	}
 
-	public void setApXYDuration(int iApX, int iApY, int iDurationMs, int iTimeStepMs) {
+	public void setApXYDuration(int iApX, int iApY, int iDurationMs,
+			int iTimeStepMs) {
 		// ����Լ��
 		if (iApX < 0) {
 			iApX = 0;
@@ -378,10 +386,12 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 		// �����MoveSpeed
 		iFarestCornerX = (iApX >= (WIDTH - iApX)) ? 0 : WIDTH;
 		iFarestCornerY = (iApY >= (HEIGHT - iApY)) ? 0 : HEIGHT;
-		float fDX = mOrig[(iFarestCornerY * (WIDTH + 1) + iFarestCornerX) * 2] - mOrig[(iApY * (WIDTH + 1) + iApX) * 2];
+		float fDX = mOrig[(iFarestCornerY * (WIDTH + 1) + iFarestCornerX) * 2]
+				- mOrig[(iApY * (WIDTH + 1) + iApX) * 2];
 		float fDY = mOrig[(iFarestCornerY * (WIDTH + 1) + iFarestCornerX) * 2 + 1]
 				- mOrig[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
-		float fDistanceFarestCornerToAp = (float) Math.sqrt(((fDX * fDX) + (fDY * fDY)));
+		float fDistanceFarestCornerToAp = (float) Math
+				.sqrt(((fDX * fDX) + (fDY * fDY)));
 		mfMoveSpeed = (fDistanceFarestCornerToAp + 100) * 1000 / iDurationMs;
 		mfTimeStep = iTimeStepMs;
 		mfDurationTime = iDurationMs;
@@ -426,13 +436,17 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 		for (int y = 0; y < HEIGHT + 1; y++) {
 			for (int x = 0; x < WIDTH + 1; x++) {
 				if (mLock[y * (WIDTH + 1) + x] != 1) {
-					float fOrigDeltaX = src[(y * (WIDTH + 1) + x) * 2] - src[(iApY * (WIDTH + 1) + iApX) * 2];
-					float fOrigDeltaY = src[(y * (WIDTH + 1) + x) * 2 + 1] - src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
-					float fCurrentDeltaX = dst[(y * (WIDTH + 1) + x) * 2] - src[(iApY * (WIDTH + 1) + iApX) * 2];
+					float fOrigDeltaX = src[(y * (WIDTH + 1) + x) * 2]
+							- src[(iApY * (WIDTH + 1) + iApX) * 2];
+					float fOrigDeltaY = src[(y * (WIDTH + 1) + x) * 2 + 1]
+							- src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
+					float fCurrentDeltaX = dst[(y * (WIDTH + 1) + x) * 2]
+							- src[(iApY * (WIDTH + 1) + iApX) * 2];
 					float fCurrentDeltaY = dst[(y * (WIDTH + 1) + x) * 2 + 1]
 							- src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
 
-					float fOrigDistance = (float) Math.sqrt(fOrigDeltaX * fOrigDeltaX + fOrigDeltaY * fOrigDeltaY);
+					float fOrigDistance = (float) Math.sqrt(fOrigDeltaX
+							* fOrigDeltaX + fOrigDeltaY * fOrigDeltaY);
 					// float fCurrentDistance =
 					// FloatMath.sqrt(fCurrentDeltaX*fCurrentDeltaX +
 					// fCurrentDeltaY*fCurrentDeltaY);
@@ -448,11 +462,14 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 					float fCos = -fOrigDeltaX / fOrigDistance;
 					float F = mfFinalMoveSpeedFactor;
 					float I = mfInitialMoveSpeedFactor;
-					float fCurrentMoveSpeedFactor = I + (2 - 2 * I) * mfCurrentTime / mfDurationTime;
-					dst[(y * (WIDTH + 1) + x) * 2] = fCos * mfCurrentTime * mfMoveSpeed * fCurrentMoveSpeedFactor
-							/ 1000 + src[(y * (WIDTH + 1) + x) * 2];
-					dst[(y * (WIDTH + 1) + x) * 2 + 1] = fSin * mfCurrentTime * mfMoveSpeed * fCurrentMoveSpeedFactor
-							/ 1000 + src[(y * (WIDTH + 1) + x) * 2 + 1];
+					float fCurrentMoveSpeedFactor = I + (2 - 2 * I)
+							* mfCurrentTime / mfDurationTime;
+					dst[(y * (WIDTH + 1) + x) * 2] = fCos * mfCurrentTime
+							* mfMoveSpeed * fCurrentMoveSpeedFactor / 1000
+							+ src[(y * (WIDTH + 1) + x) * 2];
+					dst[(y * (WIDTH + 1) + x) * 2 + 1] = fSin * mfCurrentTime
+							* mfMoveSpeed * fCurrentMoveSpeedFactor / 1000
+							+ src[(y * (WIDTH + 1) + x) * 2 + 1];
 					// dst[(y*(WIDTH+1)+x)*2] =
 					// fCos*mfCurrentTime*mfMoveSpeed/1000 +
 					// src[(y*(WIDTH+1)+x)*2];
@@ -461,12 +478,16 @@ public class LijieSurfaceView extends SurfaceView implements Callback {
 					// src[(y*(WIDTH+1)+x)*2+1];
 					// }
 
-					fCurrentDeltaX = dst[(y * (WIDTH + 1) + x) * 2] - src[(iApY * (WIDTH + 1) + iApX) * 2];
-					fCurrentDeltaY = dst[(y * (WIDTH + 1) + x) * 2 + 1] - src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
+					fCurrentDeltaX = dst[(y * (WIDTH + 1) + x) * 2]
+							- src[(iApY * (WIDTH + 1) + iApX) * 2];
+					fCurrentDeltaY = dst[(y * (WIDTH + 1) + x) * 2 + 1]
+							- src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
 					if (((fCurrentDeltaX * mXPhase[y * (WIDTH + 1) + x]) <= 0)
 							&& (fCurrentDeltaY * mYPhase[y * (WIDTH + 1) + x] <= 0)) {
-						dst[(y * (WIDTH + 1) + x) * 2] = src[(iApY * (WIDTH + 1) + iApX) * 2];
-						dst[(y * (WIDTH + 1) + x) * 2 + 1] = src[(iApY * (WIDTH + 1) + iApX) * 2 + 1];
+						dst[(y * (WIDTH + 1) + x) * 2] = src[(iApY
+								* (WIDTH + 1) + iApX) * 2];
+						dst[(y * (WIDTH + 1) + x) * 2 + 1] = src[(iApY
+								* (WIDTH + 1) + iApX) * 2 + 1];
 						mLock[y * (WIDTH + 1) + x] = 1;
 					}
 				}

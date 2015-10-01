@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.OnInfoListener;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +26,10 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quku.R;
-import com.quku.Utils.ConnectionDetector;
 import com.quku.Utils.SystemDef;
 import com.quku.Utils.Utils;
 import com.quku.camera.CameraActivity;
@@ -46,31 +42,17 @@ import com.quku.note2.MyDialog;
  * 
  */
 public class MianActivity extends Activity implements OnClickListener {
-
-	private static final int SYSTEM_UPDATE = 1;
-	private static final int SYSTEM_UPDATE_VERSIONINFO = 2;
 	private static final int WINDOWMANAGER_LAYOUT_PARAM_INIT = 1;// 悬浮框初使化标记
 	private static final int WINDOWMANAGER_LAYOUT_PARAM_ONLOAD = 2;// 悬浮框录音标记
 	private static final int RECORD_MESSAGE_RECORDING = 3;// 录音中
 	private static final int RECORD_MESSAGE_RECORD_STOP = 4;// 停止录音，录音重命名
 	private static final int RECORD_MESSAGE_RECORD_STOP_RENAME = 5;// 修改文件名后，刷新录音label
-	private ImageButton entersysbtnid;
-	private ImageButton entermusicview;
-	private ImageButton enteruserhelp;
-	private ImageButton makeMusic;// 制作乐谱
-	private ImageButton mNoteList;// 备忘录
-	private ImageButton softUpdate;// 软件升级
-	private ImageButton fileManager;// 文件管理
-	private ImageButton recordManager;// 录音管理
-	private TextView updateInfo;
+
 	private MyDialog myAlertDialog;
 	private SharedPreferences systemPreference;
-	private Handler mHandler;
-	private ConnectionDetector cd;
 	private Context mContext;
 	/** 录音操作定义 */
-	private WindowManager wm = null;
-	private View mainView = null;
+	private WindowManager wm;
 	private View recordFloatView;// 录音悬浮View
 	private Button openRecord;
 	private TextView floatViewTime;
@@ -97,60 +79,27 @@ public class MianActivity extends Activity implements OnClickListener {
 	private String rootDir = SystemDef.System.FLUSHCARD
 			+ SystemDef.System.ROOTDIR + "/" + SystemDef.Record.RECORD_DIR;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mContext = this;
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		mainView = LayoutInflater.from(mContext).inflate(
-				R.layout.activity_main, null);
-		setContentView(mainView);
-		systemPreference = getSharedPreferences(
-				SystemDef.System.PREF_VERSION_NAME, MODE_PRIVATE);
-		enteruserhelp = (ImageButton) findViewById(R.id.ibOperation);
-		entermusicview = (ImageButton) findViewById(R.id.ibMy_compose);
-		entersysbtnid = (ImageButton) findViewById(R.id.ibMy_pc);
-		makeMusic = (ImageButton) findViewById(R.id.ibTake_compose);
-		mNoteList = (ImageButton) findViewById(R.id.ibCreate_compose);
-		softUpdate = (ImageButton) findViewById(R.id.ibSetting);
-		fileManager = (ImageButton) findViewById(R.id.ibCompose_manager);
-		recordManager = (ImageButton) findViewById(R.id.ibRecord_audio);
-		fileManager.setOnClickListener(this);
-		enteruserhelp.setOnClickListener(this);
-		entermusicview.setOnClickListener(this);
-		entersysbtnid.setOnClickListener(this);
-		recordManager.setOnClickListener(this);
-		makeMusic.setOnClickListener(this);
-		mNoteList.setOnClickListener(this);
-		softUpdate.setOnClickListener(this);
-		// 获取分辨率
-		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		cd = new ConnectionDetector(MianActivity.this);
-		mHandler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case SYSTEM_UPDATE:
-					Utils.getToast(MianActivity.this, "有最新版本，请更新");
-					break;
-				case SYSTEM_UPDATE_VERSIONINFO:
-					String dataInfo = (String) msg.getData().get("versionInfo");// 服务器是版本数据
-					String versionInfo = systemPreference.getString(
-							"versionInfo", null);
-					if (null == versionInfo && null != dataInfo) {
-						Editor editor = systemPreference.edit();
-						editor.putString("versionInfo", dataInfo);
-						editor.commit();
-					}
-					updateInfo.setText(dataInfo);
-					break;
-				}
-				super.handleMessage(msg);
-			}
-		};
+		setContentView(R.layout.activity_main);
+		initVariables();
 	}
 
-	private void setFloatView() {
+	private void initVariables() {
+		mContext = this;
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		systemPreference = getSharedPreferences(
+				SystemDef.System.PREF_VERSION_NAME, MODE_PRIVATE);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		enableFloatView();// 开启录音悬浮框
+	}
+
+	private void enableFloatView() {
 		if (null != wm) {
 			if (null != recordFloatView) {
 				recordFloatView.setVisibility(View.VISIBLE);
@@ -158,7 +107,7 @@ public class MianActivity extends Activity implements OnClickListener {
 		} else {
 			wm = (WindowManager) getApplicationContext().getSystemService(
 					WINDOW_SERVICE);
-			recordFloatView = LayoutInflater.from(mContext).inflate(
+			recordFloatView = View.inflate(mContext,
 					R.layout.layout_floatview_init, null);
 			initFloatView();
 			wmParams = initWinParams(WINDOWMANAGER_LAYOUT_PARAM_INIT);
@@ -173,8 +122,8 @@ public class MianActivity extends Activity implements OnClickListener {
 		openRecord.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				recordView = LayoutInflater.from(mContext).inflate(
-						R.layout.layout_floatview, null);
+				recordView = View.inflate(mContext, R.layout.layout_floatview,
+						null);
 				wmParams = initWinParams(WINDOWMANAGER_LAYOUT_PARAM_ONLOAD);
 				recordFloatView.setVisibility(View.INVISIBLE);
 				initRevoidView();
@@ -184,7 +133,6 @@ public class MianActivity extends Activity implements OnClickListener {
 					setRecording();
 				}
 			}
-
 		});
 	}
 
@@ -219,12 +167,6 @@ public class MianActivity extends Activity implements OnClickListener {
 		sdcardStatus();// 初使化录音 目录
 	}
 
-	/**
-	 * 录音布局事件类
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class MyRecordBtnListenner implements OnClickListener {
 
 		@Override
@@ -398,12 +340,6 @@ public class MianActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		setFloatView();// 开启录音悬浮框
-	}
-
 	/**
 	 * 录音状态设置
 	 */
@@ -440,27 +376,6 @@ public class MianActivity extends Activity implements OnClickListener {
 		return wmParams;
 	}
 
-	class UpdateInfoThread extends Thread {
-		@Override
-		public void run() {
-			if (!cd.isConnectingToInternet()) {
-				return;
-			}
-			String versionInfo = Utils.getVersionInfo();
-			System.out.println(" versionInfo = " + versionInfo);
-			if (null == versionInfo) {// 测试失败
-				return;
-			}
-			// 检测版本信息
-			Message msg = new Message();
-			msg.what = SYSTEM_UPDATE_VERSIONINFO;
-			Bundle b = new Bundle();
-			b.putString("versionInfo", versionInfo);
-			msg.setData(b);
-			mHandler.sendMessage(msg);
-		}
-	}
-
 	private void hideRecordView() {
 		System.out.println(" recordView = " + recordView);
 		if (null != recordFloatView) {
@@ -468,63 +383,60 @@ public class MianActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	/**
-	 * 事件处理
-	 */
 	@Override
 	public void onClick(View v) {
-
 		switch (v.getId()) {
-		case R.id.ibMy_pc:// 安卓电脑
-			System.exit(0);
+		case R.id.ibtn_my_compose:// 我的乐谱
+		case R.id.ibtn_my_compose2:// 我的乐谱
+			startActivity(new Intent(MianActivity.this,
+					MyMusicSheetActivity.class));
 			break;
-		case R.id.ibMy_compose:// 我的乐谱
-			Intent xintent = new Intent();
-			xintent.setClass(MianActivity.this, MyMusicSheetActivity.class);
-			startActivity(xintent);
-			// DanteFirstPage.this.finish();
-			break;
-		case R.id.ibOperation:// 使用说明
-			hideRecordView();
-			Intent intent = new Intent();
-			// intent.setClass(DanteFirstPage.this, UserHelpActivity.class);
-			intent.setClass(MianActivity.this, OpenWebViewActivity.class);
-			startActivity(intent);
-			// 设置切换动画，从右边进入，左边退出
-			// overridePendingTransition(R.anim.in_from_right,
-			// R.anim.out_to_left);
-			// DanteFirstPage.this.finish();
-			break;
-		case R.id.ibCompose_manager:// 文件管理
+		case R.id.ibtn_compose_manager:// 文件管理
+		case R.id.ibtn_compose_manager2:// 文件管理
 			hideRecordView();
 			Intent intentFM = new Intent();
 			intentFM.setClass(MianActivity.this, FileManagerActivity.class);
 			intentFM.setAction(SystemDef.FileManager.FM_ACTION_FILE_BROWSE);
 			startActivity(intentFM);
 			break;
-		case R.id.ibRecord_audio:// 录音管理
+		case R.id.ibtn_down_compose:// 乐谱下载
+		case R.id.ibtn_down_compose2:// 乐谱下载
+			Toast.makeText(mContext, "开发中", Toast.LENGTH_LONG).show();
+			break;
+		case R.id.ibtn_take_compose:// 制作乐谱
+		case R.id.ibtn_take_compose2:// 制作乐谱
+			hideRecordView();
+			startActivity(new Intent(MianActivity.this, CameraActivity.class));
+			break;
+		case R.id.ibtn_operation:// 使用说明
+			hideRecordView();
+			startActivity(new Intent(MianActivity.this,
+					OpenWebViewActivity.class));
+			break;
+		case R.id.ibtn_create_compose:// 我的备忘录
+			hideRecordView();
+			startActivity(new Intent(MianActivity.this,
+					MyNoteListActivity.class));
+			break;
+		case R.id.ibtn_my_pc:// 安卓电脑
+			finish();
+			break;
+		case R.id.ibtn_record_audio:// 录音管理
 			Intent intentRM = new Intent();
 			intentRM.setClass(MianActivity.this, RecordListActivity.class);
 			intentRM.setAction(SystemDef.FileManager.FM_ACTION_FILE_BROWSE);
 			startActivity(intentRM);
 			break;
-		case R.id.ibTake_compose:// 制作乐谱
-			hideRecordView();
-			Intent intent2 = new Intent();
-			intent2.setClass(MianActivity.this, CameraActivity.class);
-			startActivity(intent2);
-			// DanteFirstPage.this.finish();
+		case R.id.ibtn_dictionary:// 电子词典
+			Toast.makeText(mContext, "开发中", Toast.LENGTH_LONG).show();
 			break;
-		case R.id.ibSetting:// 软件升级
-			Intent intent1 = new Intent();
-			intent1.setClass(MianActivity.this, MoreActivity.class);
-			startActivity(intent1);
+		case R.id.ibtn_course:// 精品课程
+			Toast.makeText(mContext, "开发中", Toast.LENGTH_LONG).show();
 			break;
-		case R.id.ibCreate_compose:// 我的备忘录
-			hideRecordView();
-			Intent intent3 = new Intent();
-			intent3.setClass(MianActivity.this, MyNoteListActivity.class);//
-			startActivity(intent3);
+		case R.id.ibtn_device_manager:
+			startActivity(new Intent(MianActivity.this, MoreActivity.class));
+			break;
+		default:
 			break;
 		}
 	}
@@ -654,10 +566,6 @@ public class MianActivity extends Activity implements OnClickListener {
 		hours = 0;
 		minute = 0;
 		second = 0;
-		/*
-		 * if(null != recordhandler){
-		 * recordhandler.sendEmptyMessage(RECORD_MESSAGE_RECORD_STOP); }
-		 */
 		if (wm != null) {
 			wm = null;
 		}

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/main_bg"
-    android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="80.0dp"
@@ -16,57 +15,69 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100.0dip"
+            android:layout_marginTop="100dp"
+            android:contentDescription="@null"
             android:src="@drawable/main_quku" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp" >
+            android:layout_marginTop="80dp"
+            android:orientation="horizontal" >
 
             <ImageButton
-                android:id="@+id/ibMy_compose"
+                android:id="@+id/ibtn_my_compose"
                 android:layout_width="0.0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/my_compose" />
 
             <ImageButton
-                android:id="@+id/ibCompose_manager"
+                android:id="@+id/ibtn_compose_manager"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/compose_manager" />
 
             <ImageButton
-                android:id="@+id/_ibDown_compose"
+                android:id="@+id/ibtn_down_compose"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/down_compose" />
 
             <ImageButton
-                android:id="@+id/ibTake_compose"
+                android:id="@+id/ibtn_take_compose"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/take_compose" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
             android:scaleType="fitXY"
             android:src="@drawable/devide_book" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -106,53 +117,63 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80.0dip" >
 
             <ImageButton
-                android:id="@+id/ibOperation"
+                android:id="@+id/ibtn_operation"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/operation" />
 
             <ImageButton
-                android:id="@+id/ibCreate_compose"
+                android:id="@+id/ibtn_create_compose"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/create_compose" />
 
             <ImageButton
-                android:id="@+id/ibMy_pc"
+                android:id="@+id/ibtn_my_pc"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/my_pc" />
 
             <ImageButton
-                android:id="@+id/ibRecord_audio"
+                android:id="@+id/ibtn_record_audio"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/record_audio" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
             android:scaleType="fitXY"
             android:src="@drawable/devide_book" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -192,30 +213,39 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80.0dip" >
+            android:layout_marginTop="80.0dip"
+            android:orientation="horizontal" >
 
             <ImageButton
+                android:id="@+id/ibtn_dictionary"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/icon_dictionary" />
 
             <ImageButton
+                android:id="@+id/ibtn_course"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/icon_course" />
 
             <ImageButton
-                android:id="@+id/ibSetting"
+                android:id="@+id/ibtn_device_manager"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
+                android:onClick="onClick"
                 android:src="@drawable/icon_device" />
 
             <ImageButton
@@ -223,20 +253,23 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
                 android:src="@drawable/record_audio"
                 android:visibility="invisible" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
             android:scaleType="fitXY"
             android:src="@drawable/devide_book" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="0.0dip"
@@ -278,50 +311,54 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
 
         <LinearLayout
             android:id="@+id/ll_tab_layout"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <ImageButton
-                android:id="@+id/ibMy_compose2"
+                android:id="@+id/ibtn_my_compose2"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
                 android:src="@drawable/my_compose" />
 
             <ImageButton
-                android:id="@+id/ibCompose_manager2"
+                android:id="@+id/ibtn_compose_manager2"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
                 android:src="@drawable/compose_manager" />
 
             <ImageButton
-                android:id="@+id/ibDown_compose2"
+                android:id="@+id/ibtn_down_compose2"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
                 android:src="@drawable/down_compose" />
 
             <ImageButton
-                android:id="@+id/ibTake_compose2"
+                android:id="@+id/ibtn_take_compose2"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
+                android:contentDescription="@null"
                 android:src="@drawable/take_compose" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_tab_layout"
             android:background="@drawable/devide_bottom"

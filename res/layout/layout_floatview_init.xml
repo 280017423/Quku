@@ -3,26 +3,25 @@
     android:layout_width="wrap_content"
     android:layout_height="50dp"
     android:background="#00000050" >
+
     <Button
         android:id="@+id/openRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="录音"
         android:layout_marginLeft="10dp"
-        android:textSize="25sp"
-         />
-<!-- android:background="@drawable/record_floatview_bg" -->
+        android:text="录音"
+        android:textSize="25sp" />
+
     <TextView
         android:id="@+id/floatViewTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/openRecord"
-        android:textSize="20sp"
-        android:visibility="gone"
         android:textColor="@color/solid_red"
-         />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

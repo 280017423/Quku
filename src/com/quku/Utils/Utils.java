@@ -35,11 +35,6 @@ public class Utils {
 		}
 	}
 
-	/**
-	 * 根据URL对象返回inputStream
-	 * 
-	 * @return
-	 */
 	public static double getVersion() {
 		InputStream is = null;
 		URL url = null;

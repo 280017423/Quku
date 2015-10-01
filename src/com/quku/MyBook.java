@@ -10,7 +10,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import com.quku.Utils.AndroidUtils;
 import com.quku.activity.MyMusicSheetActivity;
 import com.quku.activity.PictureBrowers;
 
@@ -35,10 +34,7 @@ public class MyBook extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AndroidUtils.setFullNoTitleScreen(this);
-		getWindow().getDecorView().setSystemUiVisibility(4); // SYSTEM_UI_FLAG_SHOW_FULLSCREEN
-																// =
-																// 0x00000004;//����״̬8
+		getWindow().getDecorView().setSystemUiVisibility(4);
 		selectFilename = this.getIntent().getStringExtra("filename");
 		picList = getPiclList(selectFilename);
 		String pictureNameIndex = this.getIntent().getStringExtra("nameIndex");
