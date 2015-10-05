@@ -37,7 +37,8 @@ import android.widget.Toast;
 import com.quku.Utils.SystemDef;
 import com.quku.note2.MyDialog;
 
-public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnColorChangedListener {
+public class PaintLine extends GraphicsActivity implements
+		ColorPickerDialog.OnColorChangedListener {
 	int m = Color.BLUE;
 	float f;
 	private RelativeLayout layoutPic;
@@ -52,7 +53,7 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 	private MyView myView;
 	private MaskFilter mEmboss;
 	private MaskFilter mBlur;
-	int F = LayoutParams.FILL_PARENT;
+	int F = LayoutParams.MATCH_PARENT;
 	int W = LayoutParams.WRAP_CONTENT;
 	public static int picAllViewWide = SystemDef.System.IMG_PICTURE_WIDTH;
 	public static int picAllViewHigh = SystemDef.System.IMG_PICTURE_HEIGHT;
@@ -94,7 +95,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 		mEmboss = new EmbossMaskFilter(new float[] { 1, 1, 1 }, 0.4f, 6, 3.5f);
 		mBlur = new BlurMaskFilter(30, BlurMaskFilter.Blur.NORMAL);
 		/* 获取当前待编辑的图片名 */
-		final String editFilename = this.getIntent().getStringExtra("currentfilename");
+		final String editFilename = this.getIntent().getStringExtra(
+				"currentfilename");
 		layoutPic = new RelativeLayout(getBaseContext());
 
 		layoutBtn = new LinearLayout(this.getBaseContext());
@@ -115,7 +117,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 		btnExit = new ImageButton(this.getBaseContext());
 		btnExit.setBackgroundResource(R.drawable.iamges2);
 
-		LinearLayout.LayoutParams ButtonParam = new LinearLayout.LayoutParams(126, 86, 1);
+		LinearLayout.LayoutParams ButtonParam = new LinearLayout.LayoutParams(
+				126, 86, 1);
 		btnColor.setLayoutParams(ButtonParam);
 		btnSetPen.setLayoutParams(ButtonParam);
 		btnErase.setLayoutParams(ButtonParam);
@@ -131,13 +134,15 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 		layoutBtn.addView(btnClear);
 		layoutBtn.addView(btnExit);
 
-		lp1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		lp1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
 		lp1.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 		lp1.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
 
 		myView = new MyView(getBaseContext(), editFilename);
 
-		lp2 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		lp2 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
 		lp2.addRule(RelativeLayout.BELOW, myView.getId());
 
 		layoutPic.addView(myView, lp1);
@@ -168,7 +173,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 			public void onClick(View v) {
 				_mPaint.setStrokeWidth(50);
 				_mPaint.setColor(Color.WHITE);
-				_mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+				_mPaint.setXfermode(new PorterDuffXfermode(
+						PorterDuff.Mode.DST_OUT));
 			}
 		});
 
@@ -195,7 +201,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 				seekBar.setMax(10);// 设置最大刻度
 				seekBar.setProgress(paintSize);// 设置当前刻度
 				seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-					public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromTouch) {
 						paintSize = progress;
 					}
 
@@ -208,40 +215,47 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 				myAlertDialog = (MyDialog) new MyDialog(myContext);
 				myAlertDialog.setTitle("选择笔迹粗细");
 				myAlertDialog.setView(seekBar);
-				myAlertDialog.setButton("确定", new DialogInterface.OnClickListener() {
+				myAlertDialog.setButton("确定",
+						new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if (_mBitmapPaint != null) {
-							_mBitmapPaint.reset();
-						}
-						_mPaint = new Paint();
-						_mPaint.setAntiAlias(true);
-						_mPaint.setStyle(Paint.Style.STROKE);
-						_mPaint.setStrokeJoin(Paint.Join.ROUND);// 设置外边缘
-						_mPaint.setStrokeCap(Paint.Cap.SQUARE);// 形状
-						if (_myColor != 0) {
-							_mPaint.setColor(_myColor);
-						}
-						_mPaint.setStrokeWidth(paintSize);
-						_mPaint.setXfermode(null);
-						System.out.println(" setPen isClear = " + (isClear));
-						if (isClear) {
-							_mBitmap = Bitmap.createBitmap(picAllViewWide, picAllViewHigh, Bitmap.Config.ARGB_8888);
-						}
-						_mCanvas = new Canvas(_mBitmap);
-						_mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if (_mBitmapPaint != null) {
+									_mBitmapPaint.reset();
+								}
+								_mPaint = new Paint();
+								_mPaint.setAntiAlias(true);
+								_mPaint.setStyle(Paint.Style.STROKE);
+								_mPaint.setStrokeJoin(Paint.Join.ROUND);// 设置外边缘
+								_mPaint.setStrokeCap(Paint.Cap.SQUARE);// 形状
+								if (_myColor != 0) {
+									_mPaint.setColor(_myColor);
+								}
+								_mPaint.setStrokeWidth(paintSize);
+								_mPaint.setXfermode(null);
+								System.out.println(" setPen isClear = "
+										+ (isClear));
+								if (isClear) {
+									_mBitmap = Bitmap.createBitmap(
+											picAllViewWide, picAllViewHigh,
+											Bitmap.Config.ARGB_8888);
+								}
+								_mCanvas = new Canvas(_mBitmap);
+								_mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
-					}
-				});
-				myAlertDialog.setButton2("取消", new DialogInterface.OnClickListener() {
+							}
+						});
+				myAlertDialog.setButton2("取消",
+						new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
 
-					}
+							}
 
-				});
+						});
 				myAlertDialog.show();
 			}
 		});
@@ -251,8 +265,11 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 				isClear = false;
 				File fOri = new File(editFilename);
 				int subIndex = editFilename.indexOf(".");
-				String newFilenameStoreOri = editFilename.substring(0, subIndex) + "_origin"
-						+ editFilename.subSequence(subIndex, editFilename.length());
+				String newFilenameStoreOri = editFilename
+						.substring(0, subIndex)
+						+ "_origin"
+						+ editFilename.subSequence(subIndex,
+								editFilename.length());
 				File outF = new File(newFilenameStoreOri);
 				copyfile(fOri, outF);
 
@@ -264,7 +281,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 				_mCanvas.save(Canvas.ALL_SAVE_FLAG);
 				_mCanvas.restore();
 				/* 创建临时画布 */
-				mBitmapTmp = Bitmap.createBitmap(picAllViewWide, picAllViewHigh, Bitmap.Config.ARGB_8888);
+				mBitmapTmp = Bitmap.createBitmap(picAllViewWide,
+						picAllViewHigh, Bitmap.Config.ARGB_8888);
 				mCanvasTmp = new Canvas(mBitmapTmp);
 				/* 创建要保存的图片mBitmap */
 				bit = BitmapFactory.decodeFile(editFilename);
@@ -280,7 +298,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 				try {
 					fos = new FileOutputStream(f);
 					mBitmapTmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
-					Toast.makeText(PaintLine.this, "修改后的图片文件保存成功", Toast.LENGTH_LONG).show();
+					Toast.makeText(PaintLine.this, "修改后的图片文件保存成功",
+							Toast.LENGTH_LONG).show();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -293,8 +312,11 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 				isClear = false;
 				File fOri = new File(editFilename);
 				int subIndex = editFilename.indexOf(".");
-				String trueFilenameStoreOri = editFilename.substring(0, subIndex) + "_origin"
-						+ editFilename.subSequence(subIndex, editFilename.length());
+				String trueFilenameStoreOri = editFilename.substring(0,
+						subIndex)
+						+ "_origin"
+						+ editFilename.subSequence(subIndex,
+								editFilename.length());
 				File trueFile = new File(trueFilenameStoreOri);
 				if (trueFile.exists()) {
 					layoutPic.removeAllViews();
@@ -302,14 +324,16 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 					boolean b = copyfile(trueFile, fOri);
 					System.out.println(b);
 
-					myView = new MyView(PaintLine.this.getBaseContext(), editFilename);
+					myView = new MyView(PaintLine.this.getBaseContext(),
+							editFilename);
 
 					layoutPic.addView(myView, lp1);
 					layoutPic.addView(layoutBtn, lp2);
 					layoutPic.postInvalidate();
 					setContentView(layoutPic);
 					if (trueFile.delete()) {
-						Toast.makeText(PaintLine.this, "图片已经复原，原始图片备份删除", Toast.LENGTH_LONG).show();
+						Toast.makeText(PaintLine.this, "图片已经复原，原始图片备份删除",
+								Toast.LENGTH_LONG).show();
 					}
 				} else {
 					_mPaint = new Paint();
@@ -322,11 +346,13 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 						_mPaint.setColor(_myColor);
 					}
 					layoutPic.removeAllViews();
-					myView = new MyView(PaintLine.this.getBaseContext(), editFilename);
+					myView = new MyView(PaintLine.this.getBaseContext(),
+							editFilename);
 					layoutPic.addView(myView, lp1);
 					layoutPic.addView(layoutBtn, lp2);
 					setContentView(layoutPic);
-					Toast.makeText(PaintLine.this, "本文件已经是原始图片", Toast.LENGTH_LONG).show();
+					Toast.makeText(PaintLine.this, "本文件已经是原始图片",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 		});
@@ -376,7 +402,8 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 			BitmapDrawable mBit = new BitmapDrawable(eidtFilename);
 			this.setBackgroundDrawable(mBit);
 			_mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-			_mBitmap = Bitmap.createBitmap(picAllViewWide, picAllViewHigh, Bitmap.Config.ARGB_8888);
+			_mBitmap = Bitmap.createBitmap(picAllViewWide, picAllViewHigh,
+					Bitmap.Config.ARGB_8888);
 			// 保存一次一次绘制出来的图形
 			_mCanvas = new Canvas(_mBitmap);
 		}
@@ -425,24 +452,24 @@ public class PaintLine extends GraphicsActivity implements ColorPickerDialog.OnC
 			float y = event.getY();
 
 			switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					// 每次down下去重新new一个Path
-					_mPath = new Path();
-					// 每一次记录的路径对象是不一样的
-					dp = new DrawPath();
-					dp.path = _mPath;
-					dp.paint = _mPaint;
-					touch_start(x, y);
-					invalidate();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					touch_move(x, y);
-					invalidate();
-					break;
-				case MotionEvent.ACTION_UP:
-					touch_up();
-					invalidate();
-					break;
+			case MotionEvent.ACTION_DOWN:
+				// 每次down下去重新new一个Path
+				_mPath = new Path();
+				// 每一次记录的路径对象是不一样的
+				dp = new DrawPath();
+				dp.path = _mPath;
+				dp.paint = _mPaint;
+				touch_start(x, y);
+				invalidate();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				touch_move(x, y);
+				invalidate();
+				break;
+			case MotionEvent.ACTION_UP:
+				touch_up();
+				invalidate();
+				break;
 			}
 			return true;
 		}

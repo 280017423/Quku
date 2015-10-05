@@ -8,19 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class BaseFragment extends Fragment {
-	public BaseActivity mAct;
 
 	public void onAttach(Activity paramActivity) {
 		super.onAttach(paramActivity);
-		this.mAct = ((BaseActivity) paramActivity);
 	}
 
 	public void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 	}
 
-	public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle) {
-		return super.onCreateView(paramLayoutInflater, paramViewGroup, paramBundle);
+	public View onCreateView(LayoutInflater paramLayoutInflater,
+			ViewGroup paramViewGroup, Bundle paramBundle) {
+		return super.onCreateView(paramLayoutInflater, paramViewGroup,
+				paramBundle);
 	}
 
 	public void onDestroy() {

@@ -46,10 +46,10 @@ public class PictureBrowers extends Activity {
 	Bitmap curBitmap, nextBitmap;
 
 	public float tempo;
-	public float gukesudu = 0;
+	public float gukesudu;
 
 	public int section;
-	public int gukejiepai = 0;
+	public int gukejiepai;
 	public int pp;
 	public int pp2;
 
@@ -83,7 +83,7 @@ public class PictureBrowers extends Activity {
 
 	int W = LayoutParams.WRAP_CONTENT;
 	private LinearLayout.LayoutParams LY_P = new LinearLayout.LayoutParams(
-			LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+			LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	private LinearLayout.LayoutParams LY_GALLERY = new LinearLayout.LayoutParams(
 			PaintLine.picAllViewWide, PaintLine.picAllViewHigh);
 
@@ -112,7 +112,8 @@ public class PictureBrowers extends Activity {
 		}
 		System.out.println(pictureIndex + "pictureIndex");
 		if (pictureIndex > picList.size()) {
-			Toast.makeText(PictureBrowers.this, "所选图片的编号已超出该文件夹里的图片总数", Toast.LENGTH_LONG).show();
+			Toast.makeText(PictureBrowers.this, "所选图片的编号已超出该文件夹里的图片总数",
+					Toast.LENGTH_LONG).show();
 			pictureIndex = 0;
 		}
 		Collections.sort(picList);
@@ -180,7 +181,8 @@ public class PictureBrowers extends Activity {
 
 		editBtn.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				String currentEditFile = picList.get(ImageAdapter.pposition).toString();
+				String currentEditFile = picList.get(ImageAdapter.pposition)
+						.toString();
 				Intent intent = new Intent();
 				Bundle bundle = new Bundle();
 				bundle.putString("filename", selectFilename);
@@ -227,42 +229,48 @@ public class PictureBrowers extends Activity {
 			handler = new Handler() {
 				public void handleMessage(Message msg) {
 					switch (msg.what) {
-						case 1:
-							mBtn_metronome.setVisibility(View.VISIBLE);
-							if (pp == 1) {
-								mBtn_metronome.setBackgroundResource(R.drawable.signalpicture1);
-							}
+					case 1:
+						mBtn_metronome.setVisibility(View.VISIBLE);
+						if (pp == 1) {
+							mBtn_metronome
+									.setBackgroundResource(R.drawable.signalpicture1);
+						}
 
-							if (pp == 2) {
-								mBtn_metronome.setBackgroundResource(R.drawable.signalpicture2);
-							}
+						if (pp == 2) {
+							mBtn_metronome
+									.setBackgroundResource(R.drawable.signalpicture2);
+						}
 
-							if (pp == 3) {
-								mBtn_metronome.setBackgroundResource(R.drawable.signalpicture3);
-							}
-							if (pp == 4) {
-								mBtn_metronome.setBackgroundResource(R.drawable.signalpicture4);
-							}
+						if (pp == 3) {
+							mBtn_metronome
+									.setBackgroundResource(R.drawable.signalpicture3);
+						}
+						if (pp == 4) {
+							mBtn_metronome
+									.setBackgroundResource(R.drawable.signalpicture4);
+						}
 
-							if (pp == 1)
-								sndHigh.play(hitOfHigh, 1, 1, 0, 0, 1);
-							else
-								sndLow.play(hitOfLow, 1, 1, 0, 0, 1);
-							if (pp != section) {
-								pp++;
-							} else {
-								pp = 1;
-							}
-							break;
+						if (pp == 1)
+							sndHigh.play(hitOfHigh, 1, 1, 0, 0, 1);
+						else
+							sndLow.play(hitOfLow, 1, 1, 0, 0, 1);
+						if (pp != section) {
+							pp++;
+						} else {
+							pp = 1;
+						}
+						break;
 					}
 					super.handleMessage(msg);
 				}
 			};
 
-			AlertDialog.Builder dialog = new AlertDialog.Builder(PictureBrowers.this);
+			AlertDialog.Builder dialog = new AlertDialog.Builder(
+					PictureBrowers.this);
 			dialog.setTitle("请设置节拍器参数");
 
-			LinearLayout layoutgu = (LinearLayout) getLayoutInflater().inflate(R.layout.recordlayout, null);
+			LinearLayout layoutgu = (LinearLayout) getLayoutInflater().inflate(
+					R.layout.recordlayout, null);
 
 			SeekBar seekBar = (SeekBar) layoutgu.findViewById(R.id.sek1);
 			seekBar.setMax(208);
@@ -271,8 +279,10 @@ public class PictureBrowers extends Activity {
 			final TextView txt1 = (TextView) layoutgu.findViewById(R.id.txt1);
 
 			seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-					txt1.setText("您所设置的节拍数为：" + String.valueOf(progress) + " 拍每分钟");
+				public void onProgressChanged(SeekBar seekBar, int progress,
+						boolean fromTouch) {
+					txt1.setText("您所设置的节拍数为：" + String.valueOf(progress)
+							+ " 拍每分钟");
 					gukesudu = (float) (60.0 / progress);
 				}
 
@@ -287,71 +297,89 @@ public class PictureBrowers extends Activity {
 
 			dialog.setIcon(android.R.drawable.btn_star);// ͼ��
 
-			dialog.setNeutralButton("3/4拍", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					gukejiepai = 3;
-					if (mytimer != null) {
-						mytimer.cancel();
-						mBtn_metronome.setVisibility(View.GONE);
-					}
-					if ((gukesudu != 0) && (gukejiepai != 0)) {
-						tempo = gukesudu;
-						section = gukejiepai;
-						mytimer = new Timer();
-						float tempFloat = tempo * 1000;
-						mytimer.schedule(new MyTimerTask(), 0, (long) tempFloat);
-						isJiePai = true;
-					} else {
-						Toast.makeText(PictureBrowers.this, "请选择上述节拍器的参数", Toast.LENGTH_LONG).show();
-					}
-				}
-			}).setNegativeButton("4/4拍", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface arg0, int arg1) {
-					gukejiepai = 4;
-					if (mytimer != null) {
-						mytimer.cancel();
-						mBtn_metronome.setVisibility(View.GONE);
-					}
-					if ((gukesudu != 0) && (gukejiepai != 0)) {
-						tempo = gukesudu;
-						section = gukejiepai;
-						mytimer = new Timer();
-						float tempFloat = tempo * 1000;
-						mytimer.schedule(new MyTimerTask(), 0, (long) tempFloat);
-						isJiePai = true;
-					} else {
-						Toast.makeText(PictureBrowers.this, "请选择上述节拍器的参数", Toast.LENGTH_LONG).show();
-					}
-				}
-			}).setPositiveButton("2/4 拍", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface arg0, int arg1) {
-					gukejiepai = 2;
-					if (mytimer != null) {
-						mytimer.cancel();
-						mBtn_metronome.setVisibility(View.GONE);
-					}
-					if ((gukesudu != 0) && (gukejiepai != 0)) {
-						tempo = gukesudu;
-						section = gukejiepai;
-						mytimer = new Timer();
-						float tempFloat = tempo * 1000;
-						mytimer.schedule(new MyTimerTask(), 0, (long) tempFloat);
-						isJiePai = true;
-					} else {
-						Toast.makeText(PictureBrowers.this, "请选择上述节拍器的参数", Toast.LENGTH_LONG).show();
+			dialog.setNeutralButton("3/4拍",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							gukejiepai = 3;
+							if (mytimer != null) {
+								mytimer.cancel();
+								mBtn_metronome.setVisibility(View.GONE);
+							}
+							if ((gukesudu != 0) && (gukejiepai != 0)) {
+								tempo = gukesudu;
+								section = gukejiepai;
+								mytimer = new Timer();
+								float tempFloat = tempo * 1000;
+								mytimer.schedule(new MyTimerTask(), 0,
+										(long) tempFloat);
+								isJiePai = true;
+							} else {
+								Toast.makeText(PictureBrowers.this,
+										"请选择上述节拍器的参数", Toast.LENGTH_LONG)
+										.show();
+							}
+						}
+					})
+					.setNegativeButton("4/4拍",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface arg0,
+										int arg1) {
+									gukejiepai = 4;
+									if (mytimer != null) {
+										mytimer.cancel();
+										mBtn_metronome.setVisibility(View.GONE);
+									}
+									if ((gukesudu != 0) && (gukejiepai != 0)) {
+										tempo = gukesudu;
+										section = gukejiepai;
+										mytimer = new Timer();
+										float tempFloat = tempo * 1000;
+										mytimer.schedule(new MyTimerTask(), 0,
+												(long) tempFloat);
+										isJiePai = true;
+									} else {
+										Toast.makeText(PictureBrowers.this,
+												"请选择上述节拍器的参数",
+												Toast.LENGTH_LONG).show();
+									}
+								}
+							})
+					.setPositiveButton("2/4 拍",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface arg0,
+										int arg1) {
+									gukejiepai = 2;
+									if (mytimer != null) {
+										mytimer.cancel();
+										mBtn_metronome.setVisibility(View.GONE);
+									}
+									if ((gukesudu != 0) && (gukejiepai != 0)) {
+										tempo = gukesudu;
+										section = gukejiepai;
+										mytimer = new Timer();
+										float tempFloat = tempo * 1000;
+										mytimer.schedule(new MyTimerTask(), 0,
+												(long) tempFloat);
+										isJiePai = true;
+									} else {
+										Toast.makeText(PictureBrowers.this,
+												"请选择上述节拍器的参数",
+												Toast.LENGTH_LONG).show();
 
-					}
+									}
 
-				}
-			}).show();
+								}
+							}).show();
 		}
 	}
 
 	public void getPiclList(String filepath) {
 		File file = new File(filepath);
 		for (File currentFile : file.getParentFile().listFiles()) {
-			if ((currentFile.getName().endsWith(".jpg")) || (currentFile.getName().endsWith(".JPG"))
-					|| (currentFile.getName().endsWith(".png")) || (currentFile.getName().endsWith(".gif"))
+			if ((currentFile.getName().endsWith(".jpg"))
+					|| (currentFile.getName().endsWith(".JPG"))
+					|| (currentFile.getName().endsWith(".png"))
+					|| (currentFile.getName().endsWith(".gif"))
 					|| (currentFile.getName().endsWith(".bmp"))) {
 				if (!(currentFile.getName().endsWith("_origin.JPG"))) {
 					if (!(currentFile.getName().endsWith("_origin.jpg"))) {

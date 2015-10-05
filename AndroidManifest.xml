@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.quku.activity.OpenWebViewActivity"
+            android:name="com.quku.activity.UserGuideActivity"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >

@@ -77,40 +77,32 @@ public class MyNoteListActivity extends Activity {
 		mTvTitle.setText("选择模版");
 	}
 
-	/**
-	 * 自定义按钮的监听类
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class MyButtonListenner implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-				case R.id.title_with_back_title_btn_right:// 新增
-					Intent intent2 = new Intent();
-					intent2.setClass(MyNoteListActivity.this, NoteChoiceActivity.class);
-					MyNoteListActivity.this.startActivity(intent2);
-					break;
-				case R.id.title_with_back_title_btn_left:// 回到主菜单
-					finish();
-					break;
-				case R.id.tv_title_with_right1:// 编辑时取消按钮
-					delItemBtn.setVisibility(View.GONE);
-					delImageView.setVisibility(View.VISIBLE);
-					mLlRight.setVisibility(View.VISIBLE);
-					cancelButton.setVisibility(View.GONE);
-					deleteButtonShow = false;
-					break;
+			case R.id.title_with_back_title_btn_right:// 新增
+				Intent intent2 = new Intent();
+				intent2.setClass(MyNoteListActivity.this,
+						NoteChoiceActivity.class);
+				MyNoteListActivity.this.startActivity(intent2);
+				break;
+			case R.id.title_with_back_title_btn_left:// 回到主菜单
+				finish();
+				break;
+			case R.id.tv_title_with_right1:// 编辑时取消按钮
+				delItemBtn.setVisibility(View.GONE);
+				delImageView.setVisibility(View.VISIBLE);
+				mLlRight.setVisibility(View.VISIBLE);
+				cancelButton.setVisibility(View.GONE);
+				deleteButtonShow = false;
+				break;
 			}
 		}
 
 	}
 
-	/**
-	 * 重新启动后，直接刷新数据
-	 */
 	@Override
 	protected void onRestart() {
 		super.onRestart();
@@ -160,10 +152,13 @@ public class MyNoteListActivity extends Activity {
 
 			final int curPosition = position;
 			if (convertView == null) {
-				convertView = LayoutInflater.from(mContext).inflate(R.layout.item, null);
+				convertView = LayoutInflater.from(mContext).inflate(
+						R.layout.item, null);
 				ItemViewCache itemCache = new ItemViewCache();
-				itemCache.mtitleView = (TextView) convertView.findViewById(R.id.title);
-				itemCache.mbodyView = (TextView) convertView.findViewById(R.id.date);
+				itemCache.mtitleView = (TextView) convertView
+						.findViewById(R.id.title);
+				itemCache.mbodyView = (TextView) convertView
+						.findViewById(R.id.date);
 				convertView.setTag(itemCache);
 			}
 			final View row = convertView;
@@ -182,48 +177,52 @@ public class MyNoteListActivity extends Activity {
 					float x = event.getX();
 					float y = event.getY();
 					switch (action) {
-						case MotionEvent.ACTION_DOWN:
-							isMoved = false;
-							downPointX = x;
-							downPointY = y;
-							break;
-						case MotionEvent.ACTION_MOVE:
-							float deltaX = Math.abs(downPointX - x);
-							float deltaY = (downPointY - y);
-							if (deltaX > 70) {
-								isMoved = true;
-								final Button deletebutton = (Button) row.findViewById(R.id.deletebutton);
-								delItemBtn = deletebutton;
-								final ImageView arrow = (ImageView) row.findViewById(R.id.arrow);
-								delImageView = arrow;
-								if (!deleteButtonShow) {
-									unVisiable(delItemBtn, delImageView, true);
-									delItemBtn.setOnClickListener(new OnClickListener() {
-										public void onClick(View v) {
-											unVisiable(delItemBtn, delImageView, false);
-											delete(curPosition);
-											loadData();// 刷新数据
-										}
-									});
-								}
+					case MotionEvent.ACTION_DOWN:
+						isMoved = false;
+						downPointX = x;
+						downPointY = y;
+						break;
+					case MotionEvent.ACTION_MOVE:
+						float deltaX = Math.abs(downPointX - x);
+						float deltaY = (downPointY - y);
+						if (deltaX > 70) {
+							isMoved = true;
+							final Button deletebutton = (Button) row
+									.findViewById(R.id.deletebutton);
+							delItemBtn = deletebutton;
+							final ImageView arrow = (ImageView) row
+									.findViewById(R.id.arrow);
+							delImageView = arrow;
+							if (!deleteButtonShow) {
+								unVisiable(delItemBtn, delImageView, true);
+								delItemBtn
+										.setOnClickListener(new OnClickListener() {
+											public void onClick(View v) {
+												unVisiable(delItemBtn,
+														delImageView, false);
+												delete(curPosition);
+												loadData();// 刷新数据
+											}
+										});
 							}
-							if (deltaY < -30) {
-								isMoved = true;
-								// searchlayout.setVisibility(View.VISIBLE);
-							}
-							if (deltaY > 30) {
-								isMoved = true;
-								// searchlayout.setVisibility(View.GONE);
-							}
-							break;
-						case MotionEvent.ACTION_UP:
-							if ((!isMoved) && (!deleteButtonShow)) {
-								onItemClick(curPosition);
-							}
-							break;
+						}
+						if (deltaY < -30) {
+							isMoved = true;
+							// searchlayout.setVisibility(View.VISIBLE);
+						}
+						if (deltaY > 30) {
+							isMoved = true;
+							// searchlayout.setVisibility(View.GONE);
+						}
+						break;
+					case MotionEvent.ACTION_UP:
+						if ((!isMoved) && (!deleteButtonShow)) {
+							onItemClick(curPosition);
+						}
+						break;
 
-						default:
-							break;
+					default:
+						break;
 					}
 					return true;
 				}
@@ -246,7 +245,8 @@ public class MyNoteListActivity extends Activity {
 				MyNote _myNote = myNoteList.get(position);// 选中每一项
 				if (null != _myNote) {
 					Intent intent = new Intent();
-					intent.setClass(MyNoteListActivity.this, CreateNoteActivity.class);
+					intent.setClass(MyNoteListActivity.this,
+							CreateNoteActivity.class);
 					intent.putExtra("myNote", _myNote);
 					intent.putExtra("type", _myNote.getNoteType());
 					intent.setAction(SystemDef.NoteWrite.NOTE_EDITE);
@@ -254,7 +254,8 @@ public class MyNoteListActivity extends Activity {
 					// MyNoteListActivity.this.finish();
 				}
 			} catch (Exception e) {
-				Log.d(SystemDef.Debug.TAG, TAG + " onItemClick exception=" + e.getMessage());
+				Log.d(SystemDef.Debug.TAG,
+						TAG + " onItemClick exception=" + e.getMessage());
 			}
 
 		}
@@ -269,7 +270,8 @@ public class MyNoteListActivity extends Activity {
 				return;
 			MyNote note = myNoteList.get(position);
 			noteService.deleteMyNote(note.getId());
-			MyNote _tempMyNote = noteService.getMyNote(new MyNote(note.getId(), null, null));
+			MyNote _tempMyNote = noteService.getMyNote(new MyNote(note.getId(),
+					null, null));
 			if (null != _tempMyNote) {
 				// 清空mynote
 				List<MyNoteList> _tempMyNoteList = _tempMyNote.getNoteList();

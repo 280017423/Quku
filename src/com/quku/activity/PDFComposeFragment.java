@@ -61,7 +61,7 @@ public class PDFComposeFragment extends BaseFragment implements
 		mLlHomeLayout = ((Button) paramView.findViewById(R.id.btn_home));
 		mLlLastLayout = ((Button) paramView.findViewById(R.id.btn_back));
 		mFileList = new ArrayList<File>();
-		mShelfAdapter = new ShelfAdapter(mAct, mFileList, this);
+		mShelfAdapter = new ShelfAdapter(getActivity(), mFileList, this);
 		mRgComposeType = ((RadioGroup) paramView
 				.findViewById(R.id.rgComposeType));
 		mLvCompose.setAdapter(mShelfAdapter);
@@ -133,8 +133,8 @@ public class PDFComposeFragment extends BaseFragment implements
 	}
 
 	public RadioButton addRadioButton(String paramString, int paramInt) {
-		RadioButton localRadioButton = (RadioButton) this.mAct
-				.getLayoutInflater().inflate(R.layout.rb_composetype, null);
+		RadioButton localRadioButton = (RadioButton) View.inflate(
+				getActivity(), R.layout.rb_composetype, null);
 		localRadioButton.setText(paramString);
 		this.mRgComposeType.addView(localRadioButton, paramInt);
 		RadioGroup.LayoutParams localLayoutParams = (RadioGroup.LayoutParams) localRadioButton
@@ -147,7 +147,7 @@ public class PDFComposeFragment extends BaseFragment implements
 	}
 
 	public void createAddIBtn() {
-		ImageButton localImageButton = new ImageButton(this.mAct);
+		ImageButton localImageButton = new ImageButton(getActivity());
 		localImageButton.setBackgroundResource(0);
 		localImageButton.setImageResource(R.drawable.composetype_add);
 		this.mRgComposeType.addView(localImageButton);
@@ -161,14 +161,13 @@ public class PDFComposeFragment extends BaseFragment implements
 					@Override
 					public void onClick(View v) {
 						showAddDialog();
-
 					}
 				});
 	}
 
 	public void showAddDialog() {
-		AlertDialog.Builder localBuilder = new AlertDialog.Builder(this.mAct);
-		View localView = this.mAct.getLayoutInflater().inflate(
+		AlertDialog.Builder localBuilder = new AlertDialog.Builder(getActivity());
+		View localView = View.inflate(getActivity(),
 				R.layout.dialog_new_dir, null);
 		mEtAddCompose = ((EditText) localView.findViewById(R.id.etAddCompose));
 		mEtAddCompose.setText("");
@@ -200,7 +199,7 @@ public class PDFComposeFragment extends BaseFragment implements
 			localFile.mkdir();
 			addRadioButton(localFile);
 		} else {
-			Toast.makeText(this.mAct, "目录已存在", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "目录已存在", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -211,9 +210,8 @@ public class PDFComposeFragment extends BaseFragment implements
 			lastStep();
 			break;
 		case R.id.btn_home:
-			mAct.finish();
+			getActivity().finish();
 			break;
-
 		default:
 			break;
 		}
@@ -231,7 +229,7 @@ public class PDFComposeFragment extends BaseFragment implements
 
 	public void lastStep() {
 		if (mRootFile.getPath().equals(mCurrentDir.getPath())) {
-			Toast.makeText(mAct, "已经是根目录", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "已经是根目录", Toast.LENGTH_LONG).show();
 			return;
 		}
 		mCurrentDir = mCurrentDir.getParentFile();
@@ -253,7 +251,7 @@ public class PDFComposeFragment extends BaseFragment implements
 				return;
 			} catch (Exception localException) {
 				while (true)
-					Toast.makeText(PDFComposeFragment.this.mAct, "没有软件可以打开该文件",
+					Toast.makeText(getActivity(), "没有软件可以打开该文件",
 							Toast.LENGTH_LONG).show();
 			}
 		} else {

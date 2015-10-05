@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 记事本实体对象
  * 
- * @author Administrator
+ * @author zou.sq
  * 
  */
 public class MyNote implements Serializable {

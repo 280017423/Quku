@@ -33,7 +33,7 @@ import com.quku.record.RecordFileUtil;
 /**
  * 录音列表界面
  * 
- * @author Administrator
+ * @author zou.sq
  * 
  */
 public class RecordListActivity extends Activity {
@@ -56,7 +56,8 @@ public class RecordListActivity extends Activity {
 	private TextView mTvRight;
 	// private LinearLayout record_tools_new_floder;
 	private ListView recordFileList;
-	private String rootDir = SystemDef.System.FLUSHCARD + SystemDef.System.ROOTDIR + "/" + SystemDef.Record.RECORD_DIR;
+	private String rootDir = SystemDef.System.FLUSHCARD
+			+ SystemDef.System.ROOTDIR + "/" + SystemDef.Record.RECORD_DIR;
 	private List<Record> currentFileList;// 存放当前文件的文件list列表
 	public LinkedList<String> playList = new LinkedList<String>();// 播放录音文件列表，用于切换录音文件
 	private String currentDir;// 当前录音文件目录
@@ -89,33 +90,34 @@ public class RecordListActivity extends Activity {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-				case MESSAGE_PLAY_START:
-					setPlayRecordFile((String) msg.obj);
-					startPlaying();
-					break;
-				case MESSAGE_PLAYING_TIME:
-					int progress = msg.arg1;
-					record_progress.setProgress(progress);
-					time_current.setText(showTime(progress));
-					break;
-				case MESSAGE_RECORD_DIR_FLUSH:
-					currentDir = (String) msg.obj;
-					break;
-				case MESSAGE_RECORD_DATA_FLUSH:
-					if (null != recordAdapter) {
-						recordAdapter.notifyDataSetChanged();
-					}
-					break;
+			case MESSAGE_PLAY_START:
+				setPlayRecordFile((String) msg.obj);
+				startPlaying();
+				break;
+			case MESSAGE_PLAYING_TIME:
+				int progress = msg.arg1;
+				record_progress.setProgress(progress);
+				time_current.setText(showTime(progress));
+				break;
+			case MESSAGE_RECORD_DIR_FLUSH:
+				currentDir = (String) msg.obj;
+				break;
+			case MESSAGE_RECORD_DATA_FLUSH:
+				if (null != recordAdapter) {
+					recordAdapter.notifyDataSetChanged();
+				}
+				break;
 			}
 		}
-
 	};
 
 	@Override
 	protected void onResume() {
 		initView();
-		if (null != this.getIntent() && "recordFile2Pay".equals(this.getIntent().getAction())) {
-			String recordPath = this.getIntent().getStringExtra("recordFilePath");
+		if (null != this.getIntent()
+				&& "recordFile2Pay".equals(this.getIntent().getAction())) {
+			String recordPath = this.getIntent().getStringExtra(
+					"recordFilePath");
 			if (null != recordPath) {
 				setPlayRecordFile(recordPath);
 				startPlaying();
@@ -124,13 +126,12 @@ public class RecordListActivity extends Activity {
 		super.onResume();
 	}
 
-	/*
-	 * 加载view
-	 */
 	private void initView() {
 		mTvTitle = (TextView) findViewById(R.id.title_with_back_title_btn_mid);
-		mLlBack = (LinearLayout) this.findViewById(R.id.title_with_back_title_btn_left);
-		mLlRight = (LinearLayout) this.findViewById(R.id.title_with_back_title_btn_right);
+		mLlBack = (LinearLayout) this
+				.findViewById(R.id.title_with_back_title_btn_left);
+		mLlRight = (LinearLayout) this
+				.findViewById(R.id.title_with_back_title_btn_right);
 		mTvRight = (TextView) findViewById(R.id.tv_title_with_right);
 		mLlBack.setOnClickListener(new MyOnclickListenner());
 		mLlRight.setOnClickListener(new MyOnclickListenner());
@@ -141,14 +142,16 @@ public class RecordListActivity extends Activity {
 		btnPlay.setOnClickListener(new MyOnclickListenner());
 		btnPre.setOnClickListener(new MyOnclickListenner());
 		btnNext.setOnClickListener(new MyOnclickListenner());
-		record_progress = (SeekBar) this.findViewById(R.id.recordcontroller_progress);
+		record_progress = (SeekBar) this
+				.findViewById(R.id.recordcontroller_progress);
 		record_progress.setOnSeekBarChangeListener(new MySeekBarListenner());
 		time_current = (TextView) this.findViewById(R.id.time_current);
 		time_total = (TextView) this.findViewById(R.id.time_total);
 		recordFileList = (ListView) this.findViewById(R.id.recordfilelist);
 		currentFileList = RecordFileUtil.loadFileList(rootDir, currentFileList);// 初始化加载目录及文件
 		initLoadPlayList(currentFileList);// 刷新播放列表文件
-		recordAdapter = new MyRecordAdapter(mContext, currentFileList, recordHandler);
+		recordAdapter = new MyRecordAdapter(mContext, currentFileList,
+				recordHandler);
 		recordFileList.setAdapter(recordAdapter);
 		currentDir = rootDir;// 初始化目录为当前加载文件的根目录
 		mTvTitle.setText("录音列表");
@@ -169,16 +172,11 @@ public class RecordListActivity extends Activity {
 		}
 	}
 
-	/**
-	 * 自定seekbar监听处理类
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class MySeekBarListenner implements OnSeekBarChangeListener {
 
 		@Override
-		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		public void onProgressChanged(SeekBar seekBar, int progress,
+				boolean fromUser) {
 
 		}
 
@@ -194,91 +192,82 @@ public class RecordListActivity extends Activity {
 				isCharging = false;
 			}
 		}
-
 	}
 
-	/**
-	 * 自定义监听事件处理类
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class MyOnclickListenner implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-				case R.id.title_with_back_title_btn_left:// 返回
-					finish();
-					break;
-				case R.id.title_with_back_title_btn_right:// 上一层
-					if (currentDir.equals(rootDir)) {// 已经到跟目录，不能在返回
-						Utils.getToast(mContext, "已经到跟目录，不能在返回");
-					} else {
-						// 获取父目录
-						File file = new File(currentDir);
-						File parentFile = file.getParentFile();
-						if (null != parentFile && parentFile.isDirectory()) {
-							if (null != currentFileList) {
-								currentFileList = null;
-							}
-							currentFileList = RecordFileUtil.loadFileList(parentFile.getPath(), currentFileList);// 初始化加载目录及文件
-							initLoadPlayList(currentFileList);// 刷新播放列表文件
-							currentDir = parentFile.getPath();
-							recordAdapter = new MyRecordAdapter(mContext, currentFileList, recordHandler);
-							recordFileList.setAdapter(recordAdapter);
-							recordAdapter.notifyDataSetChanged();
+			case R.id.title_with_back_title_btn_left:// 返回
+				finish();
+				break;
+			case R.id.title_with_back_title_btn_right:// 上一层
+				if (currentDir.equals(rootDir)) {// 已经到跟目录，不能在返回
+					Utils.getToast(mContext, "已经到跟目录，不能在返回");
+				} else {
+					// 获取父目录
+					File file = new File(currentDir);
+					File parentFile = file.getParentFile();
+					if (null != parentFile && parentFile.isDirectory()) {
+						if (null != currentFileList) {
+							currentFileList = null;
 						}
+						currentFileList = RecordFileUtil.loadFileList(
+								parentFile.getPath(), currentFileList);// 初始化加载目录及文件
+						initLoadPlayList(currentFileList);// 刷新播放列表文件
+						currentDir = parentFile.getPath();
+						recordAdapter = new MyRecordAdapter(mContext,
+								currentFileList, recordHandler);
+						recordFileList.setAdapter(recordAdapter);
+						recordAdapter.notifyDataSetChanged();
 					}
-					break;
-				// case R.id.record_tool_new_folder:// 创建目录
-				// break;
-				case R.id.record_play:// 播放
-					if (null != mPlayer) {// 第一次加载后，就不会为空
-						if (mPlayer.isPlaying()) {
-							mPlayer.pause();
-							// btnPlay.setBackgroundResource(R.drawable.record_stop_btn);
-						} else {// 没有播放，说已经已经暂停
-								// 直接调用播放
-								// btnPlay.setBackgroundResource(R.drawable.record_play_btn);
-							mPlayer.start();
-							mPlayer.seekTo(mPlayer.getCurrentPosition());
-							scheduleTime();
-						}
-					} else {
-						// 初始化加载,调用开始播放方法
-						startPlaying();
+				}
+				break;
+			case R.id.record_play:// 播放
+				if (null != mPlayer) {// 第一次加载后，就不会为空
+					if (mPlayer.isPlaying()) {
+						mPlayer.pause();
+						// btnPlay.setBackgroundResource(R.drawable.record_stop_btn);
+					} else {// 没有播放，说已经已经暂停
+							// 直接调用播放
+							// btnPlay.setBackgroundResource(R.drawable.record_play_btn);
+						mPlayer.start();
+						mPlayer.seekTo(mPlayer.getCurrentPosition());
+						scheduleTime();
 					}
-					break;
-				case R.id.record_play_pre:// 上一首
-					int preIndex = 0;
-					if (null != playList && playList.size() > 0) {
-						if (null != getPlayRecordFile()) {
-							preIndex = playList.indexOf(getPlayRecordFile());// 当前播放录音文件的索引
-						}
+				} else {
+					startPlaying();
+				}
+				break;
+			case R.id.record_play_pre:// 上一首
+				int preIndex = 0;
+				if (null != playList && playList.size() > 0) {
+					if (null != getPlayRecordFile()) {
+						preIndex = playList.indexOf(getPlayRecordFile());// 当前播放录音文件的索引
 					}
-					preIndex--;
-					if (preIndex >= 0 && preIndex < playList.size() - 1) {
-						setPlayRecordFile(playList.get(preIndex));
-						startPlaying();
+				}
+				preIndex--;
+				if (preIndex >= 0 && preIndex < playList.size() - 1) {
+					setPlayRecordFile(playList.get(preIndex));
+					startPlaying();
+				}
+				break;
+			case R.id.record_play_next:// 下一首
+				int nextIndex = 0;
+				if (null != playList && playList.size() > 0) {
+					if (null != getPlayRecordFile()) {
+						nextIndex = playList.indexOf(getPlayRecordFile());// 当前播放录音文件的索引
 					}
-					break;
-				case R.id.record_play_next:// 下一首
-					int nextIndex = 0;
-					if (null != playList && playList.size() > 0) {
-						if (null != getPlayRecordFile()) {
-							nextIndex = playList.indexOf(getPlayRecordFile());// 当前播放录音文件的索引
-						}
-					}
-					nextIndex++;
-					if (nextIndex >= 0 && nextIndex < playList.size() - 1) {
-						setPlayRecordFile(playList.get(nextIndex));
-						startPlaying();
-					}
-					break;
+				}
+				nextIndex++;
+				if (nextIndex >= 0 && nextIndex < playList.size() - 1) {
+					setPlayRecordFile(playList.get(nextIndex));
+					startPlaying();
+				}
+				break;
 			}
 		}
-
 	}
 
 	@Override
@@ -365,7 +354,7 @@ public class RecordListActivity extends Activity {
 			time_total.setText(time);
 			mPlayer.start();
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 	}
 
@@ -381,12 +370,6 @@ public class RecordListActivity extends Activity {
 		}
 		return String.format("%02d:%02d:%02d", 0, minute, second);
 	}
-
-	/*
-	 * private void stopPlaying() {
-	 * btnPlay.setBackgroundResource(R.drawable.record_play_btn); // 重置录音 时间显示
-	 * mPlayer.release(); mPlayer = null; }
-	 */
 
 	private void sendMessage(Message msg) {
 		recordHandler.sendMessage(msg);

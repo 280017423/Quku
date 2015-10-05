@@ -59,10 +59,11 @@ import com.quku.service.MyNoteServiceImpl;
 /**
  * 添加记事本（手写）activity
  * 
- * @author Administrator
+ * @author zou.sq
  * 
  */
-public class CreateNoteActivity extends GraphicsActivity implements ColorPickerDialog.OnColorChangedListener {
+public class CreateNoteActivity extends GraphicsActivity implements
+		ColorPickerDialog.OnColorChangedListener {
 
 	private static final String TAG = "AddMyNoteActivity";
 	private static final int MESSAGE_NOTIFY_PROGRESS_DIALOG = 1;// 弹出框进度条消息
@@ -76,7 +77,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	private static final int NEW_FILE_SAVE = 1;// 文件保存
 	private static final int FILE_REPLACE = 2;// 文件替换
 	private static final int UP_PAGE_FILE_SAVE = 3;// 上一页文件保存
-	private String makeDir = Environment.getExternalStorageDirectory().getPath() + "/tflash/musicpaper/原创乐谱/";
+	private String makeDir = Environment.getExternalStorageDirectory()
+			.getPath() + "/tflash/musicpaper/原创乐谱/";
 	/** view 控件定义 */
 	private Context myContext;
 	LinearLayout mLlBack;// 回到备忘录主界面
@@ -91,7 +93,6 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	TextView currentPageNum;
 	TextView totalPageNum;
 	ImageButton nextPageButton;
-	// ImageView notebackgroud;
 	LinearLayout imageLinearLayout;
 	ImageButton switchbg;// 背景切换
 	EditText notelistname;// 画板文件名
@@ -127,37 +128,31 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	private MaskFilter mEmboss;
 	private MaskFilter mBlur;
 	// 乐谱背景颜色
-	private int noteMusiceBackImgs[] = {
-			R.drawable.note_wirte_bg_white,
-			R.drawable.note_wirte_bg_pruple,
-			R.drawable.note_wirte_bg_grap,
+	private int noteMusiceBackImgs[] = { R.drawable.note_wirte_bg_white,
+			R.drawable.note_wirte_bg_pruple, R.drawable.note_wirte_bg_grap,
 			R.drawable.note_wirte_bg_shallyellow };
 	// 记事本背景颜色
-	private int noteBackImgs[] = {
-			R.drawable.note_write_empty_bg,
-			R.drawable.note_write_grid_bg,
-			R.drawable.note_write_steak_bg };
+	private int noteBackImgs[] = { R.drawable.note_write_empty_bg,
+			R.drawable.note_write_grid_bg, R.drawable.note_write_steak_bg };
 
 	/**
 	 * 二维数据，第一元素为小图标，第二元素数组为大图标
 	 */
 	private int note_write_small_music_icons[][] = {
-			{
-					R.drawable.note_write_choice_music_a,
+			{ R.drawable.note_write_choice_music_a,
 					R.drawable.note_write_choice_music_b,
 					R.drawable.note_write_choice_music_c,
 					R.drawable.note_write_choice_music_d },
-			{
-					R.drawable.note_wirte_bg_white,
+			{ R.drawable.note_wirte_bg_white,
 					R.drawable.note_wirte_bg_shallyellow,
 					R.drawable.note_wirte_bg_pruple,
 					R.drawable.note_wirte_bg_grap } };
 	private int note_write_small_note_icons[][] = {
-			{
-					R.drawable.note_wirte_choice_note_a,
+			{ R.drawable.note_wirte_choice_note_a,
 					R.drawable.note_wirte_choice_note_b,
 					R.drawable.note_wirte_choice_note_c },
-			{ R.drawable.note_write_steak_bg, R.drawable.note_write_empty_bg, R.drawable.note_write_grid_bg } };
+			{ R.drawable.note_write_steak_bg, R.drawable.note_write_empty_bg,
+					R.drawable.note_write_grid_bg } };
 
 	private Handler myHander = null;// 自定义handler刷新view
 	private int noteWrite_Type = 0;// 乐谱背景类型（乐谱、记事两种类型）
@@ -173,7 +168,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		super.onCreate(savedInstanceState);
 		myContext = this;
 		myNoteService = new MyNoteServiceImpl(this);
-		_view = (View) LayoutInflater.from(this).inflate(R.layout.activity_note_create, null);// 获取View
+		_view = (View) LayoutInflater.from(this).inflate(
+				R.layout.activity_note_create, null);// 获取View
 		initDataLoad();// 初始化数据
 		initPaintBackground();// 初始化加载画板背景
 		initPopupWindow();// 加载popupwindow背景
@@ -189,13 +185,16 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	 */
 	private void initDataLoad() {
 		// 新建备忘录
-		if (SystemDef.NoteWrite.NOTE_INSERT.equals(this.getIntent().getAction())) {
+		if (SystemDef.NoteWrite.NOTE_INSERT
+				.equals(this.getIntent().getAction())) {
 			myNote = new MyNote();
 			myNoteList = new ArrayList<MyNoteList>();
 		}
 		// 编辑备忘录，则加载当前备忘录已经存在的数据
-		else if (SystemDef.NoteWrite.NOTE_EDITE.equals(this.getIntent().getAction())) {
-			MyNote _myNote = (MyNote) this.getIntent().getSerializableExtra("myNote");
+		else if (SystemDef.NoteWrite.NOTE_EDITE.equals(this.getIntent()
+				.getAction())) {
+			MyNote _myNote = (MyNote) this.getIntent().getSerializableExtra(
+					"myNote");
 			if (null != _myNote) {
 				// 根据_myNote查询list记录
 				_myNote = myNoteService.getMyNote(_myNote);
@@ -217,10 +216,14 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	 * 加载popupwindow背景
 	 */
 	private void initPopupWindow() {
-		View popuView = this.getLayoutInflater().inflate(R.layout.layout_notewrite_choice_popup, null);
+		View popuView = this.getLayoutInflater().inflate(
+				R.layout.layout_notewrite_choice_popup, null);
 		createPopupView(popuView);
-		popuWindow = new PopupWindow(popuView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
-		popuWindow.setBackgroundDrawable(getResources().getDrawable(R.color.alpha_black));
+		popuWindow = new PopupWindow(popuView,
+				ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.FILL_PARENT);
+		popuWindow.setBackgroundDrawable(getResources().getDrawable(
+				R.color.alpha_black));
 		popuWindow.setOutsideTouchable(true);// 不能在没有焦点的时候使用
 	}
 
@@ -230,14 +233,16 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	 * @return
 	 */
 	private void createPopupView(View popuView) {
-		LinearLayout choice_bg_layout = (LinearLayout) popuView.findViewById(R.id.choice_bg_layout);
+		LinearLayout choice_bg_layout = (LinearLayout) popuView
+				.findViewById(R.id.choice_bg_layout);
 		int[] array = null;
 		if (noteWrite_Type == 1) {
 			array = note_write_small_music_icons[0];
 		} else if (noteWrite_Type == 2) {
 			array = note_write_small_note_icons[0];
 		}
-		LinearLayout.LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams params = new LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		if (null != array) {
 			int index = 0;
 			for (int resId : array) {
@@ -247,19 +252,14 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 				imgButton.setScaleType(ImageView.ScaleType.FIT_XY);
 				imgButton.setPadding(10, 10, 10, 10);
 				// 添加监听事件
-				imgButton.setOnClickListener(new MyPopupWindowListenner(index, noteWrite_Type));
+				imgButton.setOnClickListener(new MyPopupWindowListenner(index,
+						noteWrite_Type));
 				choice_bg_layout.addView(imgButton, params);
 				index++;
 			}
 		}
 	}
 
-	/**
-	 * 背景选择popupWindow弹出框监听事件
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class MyPopupWindowListenner implements android.view.View.OnClickListener {
 		private int index;
 		private int myType;
@@ -297,15 +297,15 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	@Override
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		switch (id) {
-			case DIALOG_NOTEBG_REPLACE_CONFIG:// note背景替换时的确认dialog
-				dialogReplaceNoteBg(args);
-				break;
-			case DIALOG_NOTE_DELETE_CONFIG:// 删除notelist记录是的dialog
-				dialogDelNoteList();
-				break;
-			case DIALOG_NOTE_BACK_NOTELIST_CONFIG:
-				dialogBackNoteMain();
-				break;
+		case DIALOG_NOTEBG_REPLACE_CONFIG:// note背景替换时的确认dialog
+			dialogReplaceNoteBg(args);
+			break;
+		case DIALOG_NOTE_DELETE_CONFIG:// 删除notelist记录是的dialog
+			dialogDelNoteList();
+			break;
+		case DIALOG_NOTE_BACK_NOTELIST_CONFIG:
+			dialogBackNoteMain();
+			break;
 		}
 		return super.onCreateDialog(id, args);
 	}
@@ -326,12 +326,13 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 				CreateNoteActivity.this.finish();
 			}
 		});
-		myAlertDialog.setButton2("保存后返回", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				saveNote2DB();
-			}
-		});
+		myAlertDialog.setButton2("保存后返回",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						saveNote2DB();
+					}
+				});
 		myAlertDialog.show();
 	}
 
@@ -349,18 +350,21 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (myNoteList.size() > 0) {// 有页码
-					int currentPage = Integer.parseInt(currentPageNum.getText().toString());
+					int currentPage = Integer.parseInt(currentPageNum.getText()
+							.toString());
 					if (myNoteList.size() == 1) {// 当前只有一个画板时
 						if (currentPage > 1) {// 说明为新建画板界面，不管是编辑或者非编辑状态，将直接回到第一张画板
 							// 直接跳转到第一页码，当前不需要做删除操作
-							loadMyView(CreateNoteActivity.this,
-									Drawable.createFromPath(myNoteList.get(0).getPicPath()), false);
-							notelistname.setText(myNoteList.get(0).getNotelistname());// 刷新文件名
+							loadMyView(CreateNoteActivity.this, Drawable
+									.createFromPath(myNoteList.get(0)
+											.getPicPath()), false);
+							notelistname.setText(myNoteList.get(0)
+									.getNotelistname());// 刷新文件名
 						} else {// 当前为预览画板状态
 							myNoteList.remove(0);// 直接删除第一个位置，但不先清除文件
 													// ，在返回或者确认保存后再做处理
-							loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()),
-									true);
+							loadMyView(CreateNoteActivity.this, getResources()
+									.getDrawable(getCurrentBackground()), true);
 							notelistname.setText("");// 刷新文件名
 						}
 						flushTotalPage("+");
@@ -371,36 +375,50 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 						// 说明已经到了最后一页了，当前只有一种场景是画板预览时的最后一页的画板,删除当前画板，加载上一张画板
 						if (currentPage == myNoteList.size() && currentPage > 0) {
 							myNoteList.remove(myNoteList.size() - 1);// 删除当前画板
-							loadMyView(CreateNoteActivity.this,
-									Drawable.createFromPath(myNoteList.get(myNoteList.size() - 1).getPicPath()), false);
+							loadMyView(
+									CreateNoteActivity.this,
+									Drawable.createFromPath(myNoteList.get(
+											myNoteList.size() - 1).getPicPath()),
+									false);
 							flushTotalPage(String.valueOf(currentPage - 1));
 							flushCurrentPage(String.valueOf(currentPage - 1));
-							notelistname.setText(myNoteList.get(myNoteList.size() - 1).getNotelistname());// 刷新文件名
+							notelistname.setText(myNoteList.get(
+									myNoteList.size() - 1).getNotelistname());// 刷新文件名
 							if (myNoteList.size() <= 1) {
 								flushTotalPage("+");
 							}
 						} else if (currentPage > myNoteList.size()) {// 说明为新建页面，直接加载一张画板，不需要删除
-							loadMyView(CreateNoteActivity.this,
-									Drawable.createFromPath(myNoteList.get(myNoteList.size() - 1).getPicPath()), false);
+							loadMyView(
+									CreateNoteActivity.this,
+									Drawable.createFromPath(myNoteList.get(
+											myNoteList.size() - 1).getPicPath()),
+									false);
 							flushTotalPage(String.valueOf(currentPage - 1));
 							flushCurrentPage(String.valueOf(currentPage - 1));
-							notelistname.setText(myNoteList.get(myNoteList.size() - 1).getNotelistname());// 刷新文件名
+							notelistname.setText(myNoteList.get(
+									myNoteList.size() - 1).getNotelistname());// 刷新文件名
 							if (myNoteList.size() <= 1) {
 								flushTotalPage("+");
 							}
 						} else if (currentPage < myNoteList.size()) {
 							if (currentPage <= 0) {
-								loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()),
-										true);
+								loadMyView(
+										CreateNoteActivity.this,
+										getResources().getDrawable(
+												getCurrentBackground()), true);
 								flushTotalPage("+");
 								flushCurrentPage("1");
 								notelistname.setText("");// 刷新文件名
 							} else {// 加载一下张
-								loadMyView(CreateNoteActivity.this,
-										Drawable.createFromPath(myNoteList.get(currentPage).getPicPath()), false);
+								loadMyView(
+										CreateNoteActivity.this,
+										Drawable.createFromPath(myNoteList.get(
+												currentPage).getPicPath()),
+										false);
 								flushTotalPage(String.valueOf(myNoteList.size() - 1));
 								flushCurrentPage(String.valueOf(currentPage));
-								notelistname.setText(myNoteList.get(currentPage).getNotelistname());// 刷新文件名
+								notelistname.setText(myNoteList
+										.get(currentPage).getNotelistname());// 刷新文件名
 								myNoteList.remove(currentPage - 1);
 								if (myNoteList.size() <= 1) {
 									flushTotalPage("+");
@@ -409,7 +427,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 						}
 					}
 				} else {// 新添加的,直接恢复到默认背景
-					loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()), true);
+					loadMyView(CreateNoteActivity.this, getResources()
+							.getDrawable(getCurrentBackground()), true);
 					flushTotalPage("+");
 					flushCurrentPage("1");
 				}
@@ -432,19 +451,26 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	private void dialogReplaceNoteBg(Bundle bundle) {
 		final int index = bundle.getInt("currentIndex");
 		final int myType = bundle.getInt("myType");
-		System.out.println(" dialog index = " + index + "\t myType = " + myType);
+		System.out
+				.println(" dialog index = " + index + "\t myType = " + myType);
 		myAlertDialog = (MyDialog) new MyDialog(myContext);
 		myAlertDialog.setTitle(R.string.alert_config_note_bg_title);
 		myAlertDialog.setButton("确定", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (myType == 1) {
-					loadMyView(CreateNoteActivity.this,
-							getResources().getDrawable(note_write_small_music_icons[1][index]), true);
+					loadMyView(
+							CreateNoteActivity.this,
+							getResources().getDrawable(
+									note_write_small_music_icons[1][index]),
+							true);
 					setCurrentBackground(note_write_small_music_icons[1][index]);// 记录当前背景
 				} else {
-					loadMyView(CreateNoteActivity.this,
-							getResources().getDrawable(note_write_small_note_icons[1][index]), true);
+					loadMyView(
+							CreateNoteActivity.this,
+							getResources().getDrawable(
+									note_write_small_note_icons[1][index]),
+							true);
 					setCurrentBackground(note_write_small_note_icons[1][index]);// 记录当前背景
 				}
 			}
@@ -458,13 +484,6 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 
 	}
 
-	/*
-	 * 根据图片路径创建drawble对象
-	 * 
-	 * @param path
-	 * 
-	 * @return
-	 */
 	private Drawable createDrawable(String path) {
 		File file = new File(path);
 		// 判断当前图片是否存在
@@ -483,67 +502,65 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		int type = this.getIntent().getIntExtra("type", 0);// 不管为新建还是编辑都需要传type
 		// 新建note为默认背景，编辑的话需要加载note已经存在的背景,需要区分当前操作
 		switch (type) {
-			case SystemDef.NoteWrite.TYPE_MAKEMUSIC:
-				if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
-					loadMyView(this.getBaseContext(), createDrawable(myNoteList.get(0).getPicPath()), false);// 初始化画板背景图片
-					// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
-				} else {
-					loadMyView(this.getBaseContext(), getResources().getDrawable(noteMusiceBackImgs[0]), true);// 初始化画板背景图片
-				}
-				setCurrentBackground(noteMusiceBackImgs[0]);// 记录当前背景
-				noteWrite_Type = 1;
-				myNote.setNoteType(type);
-				break;
-			case SystemDef.NoteWrite.TYPE_EMPTY:
-				if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
-					loadMyView(this.getBaseContext(), createDrawable(myNoteList.get(0).getPicPath()), false);// 初始化画板背景图片
-					// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
-				} else {
-					loadMyView(this.getBaseContext(), getResources().getDrawable(noteBackImgs[0]), true);// 初始化画板背景图片
-				}
-				myNote.setNoteType(type);
-				noteWrite_Type = 2;
-				setCurrentBackground(noteBackImgs[0]);// 记录当前背景
-				break;
-			case SystemDef.NoteWrite.TYPE_GRID:
-				if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
-					loadMyView(this.getBaseContext(), createDrawable(myNoteList.get(0).getPicPath()), false);// 初始化画板背景图片
-					// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
-				} else {
-					loadMyView(this.getBaseContext(), getResources().getDrawable(noteBackImgs[1]), true);// 初始化画板背景图片
-				}
-				myNote.setNoteType(type);
-				noteWrite_Type = 2;
-				setCurrentBackground(noteBackImgs[1]);// 记录当前背景
-				break;
-			case SystemDef.NoteWrite.TYPE_STREAK:
-				if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
-					loadMyView(this.getBaseContext(), createDrawable(myNoteList.get(0).getPicPath()), false);// 初始化画板背景图片
-					// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
-				} else {
-					loadMyView(this.getBaseContext(), getResources().getDrawable(noteBackImgs[2]), true);// 初始化画板背景图片
-				}
-				myNote.setNoteType(type);
-				noteWrite_Type = 2;
-				setCurrentBackground(noteBackImgs[2]);// 记录当前背景
-				break;
+		case SystemDef.NoteWrite.TYPE_MAKEMUSIC:
+			if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
+				loadMyView(this.getBaseContext(), createDrawable(myNoteList
+						.get(0).getPicPath()), false);// 初始化画板背景图片
+				// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
+			} else {
+				loadMyView(this.getBaseContext(),
+						getResources().getDrawable(noteMusiceBackImgs[0]), true);// 初始化画板背景图片
+			}
+			setCurrentBackground(noteMusiceBackImgs[0]);// 记录当前背景
+			noteWrite_Type = 1;
+			myNote.setNoteType(type);
+			break;
+		case SystemDef.NoteWrite.TYPE_EMPTY:
+			if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
+				loadMyView(this.getBaseContext(), createDrawable(myNoteList
+						.get(0).getPicPath()), false);// 初始化画板背景图片
+				// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
+			} else {
+				loadMyView(this.getBaseContext(),
+						getResources().getDrawable(noteBackImgs[0]), true);// 初始化画板背景图片
+			}
+			myNote.setNoteType(type);
+			noteWrite_Type = 2;
+			setCurrentBackground(noteBackImgs[0]);// 记录当前背景
+			break;
+		case SystemDef.NoteWrite.TYPE_GRID:
+			if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
+				loadMyView(this.getBaseContext(), createDrawable(myNoteList
+						.get(0).getPicPath()), false);// 初始化画板背景图片
+				// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
+			} else {
+				loadMyView(this.getBaseContext(),
+						getResources().getDrawable(noteBackImgs[1]), true);// 初始化画板背景图片
+			}
+			myNote.setNoteType(type);
+			noteWrite_Type = 2;
+			setCurrentBackground(noteBackImgs[1]);// 记录当前背景
+			break;
+		case SystemDef.NoteWrite.TYPE_STREAK:
+			if (null != myNoteList && myNoteList.size() > 0) {// 说明为编辑状态
+				loadMyView(this.getBaseContext(), createDrawable(myNoteList
+						.get(0).getPicPath()), false);// 初始化画板背景图片
+				// setCurrentBackground(noteMusiceBackImgs[0]);//记录当前背景,主要用来新建时的背景
+			} else {
+				loadMyView(this.getBaseContext(),
+						getResources().getDrawable(noteBackImgs[2]), true);// 初始化画板背景图片
+			}
+			myNote.setNoteType(type);
+			noteWrite_Type = 2;
+			setCurrentBackground(noteBackImgs[2]);// 记录当前背景
+			break;
 		}
 	}
 
-	/**
-	 * 获取当前新建记录时的背景图片资源id
-	 * 
-	 * @return
-	 */
 	public int getCurrentBackground() {
 		return currentBackground;
 	}
 
-	/**
-	 * 设置当前新建记录时的背景图片资源id
-	 * 
-	 * @param currentBackground
-	 */
 	public void setCurrentBackground(int currentBackground) {
 		this.currentBackground = currentBackground;
 	}
@@ -556,56 +573,59 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-					case MESSAGE_NOTIFY_PROGRESS_DIALOG:// 加载进度弹出框消息
-						break;
-					case MESSAGE_FLUSH_NOTE_PAGE_NEW_FILE_SAVE_OK:// 刷新页码成功
-						String filePath = (String) msg.getData().get("path");
-						// 当前信息保存
-						MyNoteList noteList = new MyNoteList();
-						noteList.setPicPath(filePath);
-						if (!"".equals(notelistname.getText().toString())) {
-							noteList.setNotelistname(notelistname.getText().toString());
-						}
-						myNoteList.add(noteList);
-						// 更换新背景
-						loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()), true);
-						// 刷当前页码数
-						flushCurrentPage(String.valueOf(Integer.parseInt(currentPageNum.getText().toString()) + 1));
-						// 刷新总页码数
-						if (myNoteList.size() == SystemDef.NoteWrite.NOTE_WIRTE_TOTAL_NUMBER_MAX) {// 最大页码限制数
-							flushTotalPage(String.valueOf(myNoteList.size()));
-						} else {
-							flushTotalPage("+");
-						}
-						notelistname.setText("");
-						break;
-					case MESSAGE_FLUSH_NOTE_PAGE_FILE_REPLACE_OK:
-						// //更换新背景
-						// try {
-						// int current = Integer.parseInt(currentPageNum
-						// .getText().toString());
-						// String _path = myNoteList.get(current - 1)
-						// .getPicPath();
-						// loadMyView(AddMyNoteActivity.this,
-						// Drawable.createFromPath(_path));
-						// } catch (Exception e) {
-						// Log.d(SystemDef.Debug.TAG, TAG +
-						// " handlerMessage MESSAGE_FLUSH_NOTE_PAGE_FILE_REPLACE_OK exception = "
-						// + e.getMessage());
-						// }
-						break;
-					case MESSAGE_FLUSH_NOTE_PAGE_UP_PAGE_FILE_SAVE_OK:// 切换到上一页时，当前页面编辑后保存消息
-						// String filePath1 = (String)msg.getData().get("path");
-						// //当前信息保存
-						// MyNoteList noteList1 = new MyNoteList();
-						// noteList1.setPicPath(filePath1);
-						// myNoteList.add(noteList1);
+				case MESSAGE_NOTIFY_PROGRESS_DIALOG:// 加载进度弹出框消息
+					break;
+				case MESSAGE_FLUSH_NOTE_PAGE_NEW_FILE_SAVE_OK:// 刷新页码成功
+					String filePath = (String) msg.getData().get("path");
+					// 当前信息保存
+					MyNoteList noteList = new MyNoteList();
+					noteList.setPicPath(filePath);
+					if (!"".equals(notelistname.getText().toString())) {
+						noteList.setNotelistname(notelistname.getText()
+								.toString());
+					}
+					myNoteList.add(noteList);
+					// 更换新背景
+					loadMyView(CreateNoteActivity.this, getResources()
+							.getDrawable(getCurrentBackground()), true);
+					// 刷当前页码数
+					flushCurrentPage(String.valueOf(Integer
+							.parseInt(currentPageNum.getText().toString()) + 1));
+					// 刷新总页码数
+					if (myNoteList.size() == SystemDef.NoteWrite.NOTE_WIRTE_TOTAL_NUMBER_MAX) {// 最大页码限制数
+						flushTotalPage(String.valueOf(myNoteList.size()));
+					} else {
+						flushTotalPage("+");
+					}
+					notelistname.setText("");
+					break;
+				case MESSAGE_FLUSH_NOTE_PAGE_FILE_REPLACE_OK:
+					// //更换新背景
+					// try {
+					// int current = Integer.parseInt(currentPageNum
+					// .getText().toString());
+					// String _path = myNoteList.get(current - 1)
+					// .getPicPath();
+					// loadMyView(AddMyNoteActivity.this,
+					// Drawable.createFromPath(_path));
+					// } catch (Exception e) {
+					// Log.d(SystemDef.Debug.TAG, TAG +
+					// " handlerMessage MESSAGE_FLUSH_NOTE_PAGE_FILE_REPLACE_OK exception = "
+					// + e.getMessage());
+					// }
+					break;
+				case MESSAGE_FLUSH_NOTE_PAGE_UP_PAGE_FILE_SAVE_OK:// 切换到上一页时，当前页面编辑后保存消息
+					// String filePath1 = (String)msg.getData().get("path");
+					// //当前信息保存
+					// MyNoteList noteList1 = new MyNoteList();
+					// noteList1.setPicPath(filePath1);
+					// myNoteList.add(noteList1);
 
-						break;
-					case MESSAGE_FLUSH_NOTE_PAGE_ERROR:
-						String errorInfo = msg.getData().getString("error");
-						Utils.getToast(CreateNoteActivity.this, errorInfo);
-						break;
+					break;
+				case MESSAGE_FLUSH_NOTE_PAGE_ERROR:
+					String errorInfo = msg.getData().getString("error");
+					Utils.getToast(CreateNoteActivity.this, errorInfo);
+					break;
 				}
 			}
 		};
@@ -621,18 +641,11 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		totalPageNum.setText(value);
 	}
 
-	/*
-	 * 加载画板背景图片
-	 * 
-	 * @param context
-	 * 
-	 * @param drawable
-	 * 
-	 * @param myViewIsEmptyView 当前画板是否为空白画板
-	 */
-	private void loadMyView(Context context, Drawable drawable, boolean myViewIsEmptyView) {
+	private void loadMyView(Context context, Drawable drawable,
+			boolean myViewIsEmptyView) {
 		myView = new MyView(context, drawable, myViewIsEmptyView);
-		imageLinearLayout = (LinearLayout) _view.findViewById(R.id.imageLinearLayout);
+		imageLinearLayout = (LinearLayout) _view
+				.findViewById(R.id.imageLinearLayout);
 		imageLinearLayout.removeAllViews();
 		imageLinearLayout.addView(myView);
 		_view.postInvalidate();
@@ -658,10 +671,12 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	private void initView() {
 		noteDelete = (Button) this.findViewById(R.id.noteDelete);
 		notelistname = (EditText) this.findViewById(R.id.notelistname);
-		mLlFinish = (LinearLayout) this.findViewById(R.id.title_with_back_title_btn_right);
+		mLlFinish = (LinearLayout) this
+				.findViewById(R.id.title_with_back_title_btn_right);
 		mTvRight = (TextView) findViewById(R.id.tv_title_with_right);
 		switchbg = (ImageButton) this.findViewById(R.id.switchbg);// 背景切换
-		mLlBack = (LinearLayout) this.findViewById(R.id.title_with_back_title_btn_left);
+		mLlBack = (LinearLayout) this
+				.findViewById(R.id.title_with_back_title_btn_left);
 		fontButton = (Button) this.findViewById(R.id.notefont);
 		colorButton = (Button) this.findViewById(R.id.notecolor);
 		parseButton = (Button) this.findViewById(R.id.noteparse);
@@ -746,17 +761,24 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 							return;
 						}
 						// 获取当前图片路径
-						String currentImgPath = myNoteList.get(currentNum - 2).getPicPath();
-						Drawable drawable = Drawable.createFromPath(currentImgPath);
+						String currentImgPath = myNoteList.get(currentNum - 2)
+								.getPicPath();
+						Drawable drawable = Drawable
+								.createFromPath(currentImgPath);
 						if (null == drawable) {
-							Utils.getToast(CreateNoteActivity.this, "数据异常，请进行清空或者删除操作");
+							Utils.getToast(CreateNoteActivity.this,
+									"数据异常，请进行清空或者删除操作");
 							return;
 						}
 						// 替换
-						new SaveImageThread(currentImgPath, drawable, FILE_REPLACE).start();
+						new SaveImageThread(currentImgPath, drawable,
+								FILE_REPLACE).start();
 					} catch (Exception e) {
-						Log.d(SystemDef.Debug.TAG, TAG + " saveNote2DB myNoteList size = " + (myNoteList.size())
-								+ "currentNum = " + (currentNum - 2) + "  exception = " + e.getMessage());
+						Log.d(SystemDef.Debug.TAG,
+								TAG + " saveNote2DB myNoteList size = "
+										+ (myNoteList.size()) + "currentNum = "
+										+ (currentNum - 2) + "  exception = "
+										+ e.getMessage());
 					}
 				}
 			}
@@ -773,7 +795,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		for (MyNoteList _noteList : myNoteList) {
 			String noteFileName = _noteList.getNotelistname();
 			if (null == noteFileName || "".equals(noteFileName)) {
-				strBuffer.append("第" + (temp_index + 1) + "页，未定义文件 名").append("\n");
+				strBuffer.append("第" + (temp_index + 1) + "页，未定义文件 名").append(
+						"\n");
 			}
 			temp_index++;
 		}
@@ -782,15 +805,10 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			Utils.getToast(myContext, strBuffer.toString());
 			return;
 		}
-		// /**
-		// * 不管新增还是编辑，统一用新增入库:
-		// * 1、清空之前数据
-		// * 2、组装myNote对象
-		// */
-		// List<MyNoteList> orgiMyNoteList = null;//原有的mynotelist记录
-		// 删除原有记录
+
 		if (null != myNote && 0 != myNote.getId()) {// id不为0，说明是编辑
-			MyNote _tempMyNote = myNoteService.getMyNote(new MyNote(myNote.getId(), null, null));
+			MyNote _tempMyNote = myNoteService.getMyNote(new MyNote(myNote
+					.getId(), null, null));
 			if (null != _tempMyNote) {
 				// 清空mynote
 				myNoteService.deleteMyNote(myNote.getId());
@@ -838,67 +856,59 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		myAlertDialog.show();
 	}
 
-	/**
-	 * 自定义按钮的监听类
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class MybuttonListener implements android.view.View.OnClickListener {
 
 		public void onClick(View v) {
 			switch (v.getId()) {
-				case R.id.title_with_back_title_btn_right:
-					if ("".equals(notelistname.getText().toString())) {
-						Utils.getToast(CreateNoteActivity.this, "标题不能为空");
-						return;
-					}
-					if (myView.isMyViewIsEmptyView() && !myView.isMyViewIsEdit()) {
-						Utils.getToast(CreateNoteActivity.this, "不能添加空白页面，请先编辑！！！");
-						return;
-					}
-					saveNote2DB();
-					break;
-				case R.id.switchbg:// 切换画板背景
-					if (popuWindow != null) {
-						popuWindow.showAtLocation(notelistname, Gravity.CENTER, 0, 0);
-					}
-					break;
-				case R.id.title_with_back_title_btn_left:// 回到备忘录主页
-					showDialog(DIALOG_NOTE_BACK_NOTELIST_CONFIG);
-					break;
-				case R.id.notefont:// 字体
-					setFont();
-					break;
-				case R.id.noteClear:// 清空
-					noteClear();
-					break;
-				case R.id.noteDelete:// 删除
-					noteDelete();
-					break;
-				case R.id.noteparse:// 橡皮檫
-					_mPaint.setStrokeWidth(50);
-					_mPaint.setColor(Color.WHITE);
-					_mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
-					break;
-				case R.id.notecolor:// 颜色
-					_mPaint.setXfermode(null);
-					_mPaint.setAlpha(0xFF);
-					showColorDialog();
-					break;
-				case R.id.uppage:// 上一页
-					upPage();
-					break;
-				case R.id.nextpage:// 下一页
-					nextPage();
-					break;
+			case R.id.title_with_back_title_btn_right:
+				if ("".equals(notelistname.getText().toString())) {
+					Utils.getToast(CreateNoteActivity.this, "标题不能为空");
+					return;
+				}
+				if (myView.isMyViewIsEmptyView() && !myView.isMyViewIsEdit()) {
+					Utils.getToast(CreateNoteActivity.this, "不能添加空白页面，请先编辑！！！");
+					return;
+				}
+				saveNote2DB();
+				break;
+			case R.id.switchbg:// 切换画板背景
+				if (popuWindow != null) {
+					popuWindow.showAtLocation(notelistname, Gravity.CENTER, 0,
+							0);
+				}
+				break;
+			case R.id.title_with_back_title_btn_left:// 回到备忘录主页
+				showDialog(DIALOG_NOTE_BACK_NOTELIST_CONFIG);
+				break;
+			case R.id.notefont:// 字体
+				setFont();
+				break;
+			case R.id.noteClear:// 清空
+				noteClear();
+				break;
+			case R.id.noteDelete:// 删除
+				noteDelete();
+				break;
+			case R.id.noteparse:// 橡皮檫
+				_mPaint.setStrokeWidth(50);
+				_mPaint.setColor(Color.WHITE);
+				_mPaint.setXfermode(new PorterDuffXfermode(
+						PorterDuff.Mode.DST_OUT));
+				break;
+			case R.id.notecolor:// 颜色
+				_mPaint.setXfermode(null);
+				_mPaint.setAlpha(0xFF);
+				showColorDialog();
+				break;
+			case R.id.uppage:// 上一页
+				upPage();
+				break;
+			case R.id.nextpage:// 下一页
+				nextPage();
+				break;
 			}
-
 		}
 
-		/*
-		 * 删除当前页面 1、删除当前页面，如果有下页将直接展示下一页，并刷新页码 2、删除当前页面，如果没有下页，将直接展示默认界面，并刷新页码
-		 */
 		private void noteDelete() {
 			showDialog(DIALOG_NOTE_DELETE_CONFIG);
 		}
@@ -908,7 +918,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		 */
 		private void noteClear() {
 			// if(myView.isMyViewIsEmptyView()){//如果为空白页，则直接恢复到默认画板背景
-			loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()), true);
+			loadMyView(CreateNoteActivity.this,
+					getResources().getDrawable(getCurrentBackground()), true);
 			// }
 		}
 	}
@@ -945,22 +956,15 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 							return;
 						}
 						// 获取当前图片路径
-						String currentImgPath = myNoteList.get(currentPage - 1).getPicPath();
-						// 替换是不能用原先的画板背景，不然导致修改的和原先的重叠了,必须用默认背景
-						// 修改屏蔽 Drawable drawable
-						// =Drawable.createFromPath(currentImgPath);
-						// if(null ==drawable ){
-						// Utils.getToast(AddMyNoteActivity.this,
-						// "数据异常，请进行清空或者删除操作");
-						// return;
-						// }
-						// 替换
-						new SaveImageThread(
-								currentImgPath, getResources().getDrawable(getCurrentBackground()), FILE_REPLACE)
-								.start();
+						String currentImgPath = myNoteList.get(currentPage - 1)
+								.getPicPath();
+						new SaveImageThread(currentImgPath, getResources()
+								.getDrawable(getCurrentBackground()),
+								FILE_REPLACE).start();
 						// 设置当前文件名
 						if (!"".equals(notelistname.getText().toString())) {
-							myNoteList.get(currentPage - 1).setNotelistname(notelistname.getText().toString());
+							myNoteList.get(currentPage - 1).setNotelistname(
+									notelistname.getText().toString());
 						}
 					}
 
@@ -973,14 +977,16 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 				currentPageNum.setText(String.valueOf(currentPage - 1));
 				String picPath = myNoteList.get(currentPage - 2).getPicPath();
 				if (null != myNoteList.get(currentPage - 2).getNotelistname()) {
-					notelistname.setText(myNoteList.get(currentPage - 2).getNotelistname());
+					notelistname.setText(myNoteList.get(currentPage - 2)
+							.getNotelistname());
 				}
 				loadMyView(this, Drawable.createFromPath(picPath), false);
 				totalPageNum.setText(String.valueOf(myNoteList.size()));
 			}
 
 		} catch (Exception e) {
-			Log.d(SystemDef.Debug.TAG, TAG + " upPage exception = " + e.getMessage());
+			Log.d(SystemDef.Debug.TAG,
+					TAG + " upPage exception = " + e.getMessage());
 			return;
 		}
 	}
@@ -997,7 +1003,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 				return;
 			}
 		} catch (Exception e) {
-			Log.d(SystemDef.Debug.TAG, TAG + " nextPage exception = " + e.getMessage());
+			Log.d(SystemDef.Debug.TAG,
+					TAG + " nextPage exception = " + e.getMessage());
 			return;
 		}
 		/**
@@ -1009,15 +1016,19 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			// 判断当前界面是已经存在还是新编辑的
 			if (!myView.isMyViewIsEmptyView() && myView.isMyViewIsEdit()) {// 非空白、编辑，则替换
 				// 获取当前图片路径
-				String currentImgPath = myNoteList.get(currentNum - 1).getPicPath();
+				String currentImgPath = myNoteList.get(currentNum - 1)
+						.getPicPath();
 				// 替换
-				new SaveImageThread(currentImgPath, getResources().getDrawable(getCurrentBackground()), FILE_REPLACE)
-						.start();
+				new SaveImageThread(currentImgPath, getResources().getDrawable(
+						getCurrentBackground()), FILE_REPLACE).start();
 				// 设置当前文件名
 				if (!"".equals(notelistname.getText().toString())) {
-					myNoteList.get(currentNum - 1).setNotelistname(notelistname.getText().toString());
+					myNoteList.get(currentNum - 1).setNotelistname(
+							notelistname.getText().toString());
 				}
-				loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()), true);
+				loadMyView(CreateNoteActivity.this,
+						getResources().getDrawable(getCurrentBackground()),
+						true);
 				flushCurrentPage(String.valueOf(currentNum + 1));
 				flushTotalPage("+");
 				notelistname.setText("");
@@ -1034,15 +1045,20 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 					notelistname.requestFocus();
 					return;
 				}
-			} else if (!myView.isMyViewIsEmptyView() && !myView.isMyViewIsEdit()) {// 非空白、非编辑
+			} else if (!myView.isMyViewIsEmptyView()
+					&& !myView.isMyViewIsEdit()) {// 非空白、非编辑
 				notelistname.setText("");// 加载前先清空文件名
 				if (myNoteList.size() > currentNum) {
 					try {
 						// 加载下一张画板
-						loadMyView(CreateNoteActivity.this,
-								Drawable.createFromPath(myNoteList.get(currentNum).getPicPath()), false);
-						if (null != myNoteList.get(currentNum).getNotelistname()) {
-							notelistname.setText(myNoteList.get(currentNum).getNotelistname());
+						loadMyView(
+								CreateNoteActivity.this,
+								Drawable.createFromPath(myNoteList.get(
+										currentNum).getPicPath()), false);
+						if (null != myNoteList.get(currentNum)
+								.getNotelistname()) {
+							notelistname.setText(myNoteList.get(currentNum)
+									.getNotelistname());
 						}
 						// 刷新页码
 						flushCurrentPage(String.valueOf(currentNum + 1));
@@ -1053,7 +1069,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 
 					}
 				} else {
-					loadMyView(CreateNoteActivity.this, getResources().getDrawable(getCurrentBackground()), true);
+					loadMyView(CreateNoteActivity.this, getResources()
+							.getDrawable(getCurrentBackground()), true);
 					flushCurrentPage(String.valueOf(currentNum + 1));
 					flushTotalPage("+");
 					notelistname.setText("");
@@ -1078,20 +1095,25 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 					return;
 				}
 				// 获取当前图片路径
-				String currentImgPath = myNoteList.get(currentNum - 1).getPicPath();
+				String currentImgPath = myNoteList.get(currentNum - 1)
+						.getPicPath();
 				// 替换
-				new SaveImageThread(currentImgPath, getResources().getDrawable(getCurrentBackground()), FILE_REPLACE)
-						.start();
+				new SaveImageThread(currentImgPath, getResources().getDrawable(
+						getCurrentBackground()), FILE_REPLACE).start();
 				// 设置当前文件名
 				if (!"".equals(notelistname.getText().toString())) {
-					myNoteList.get(currentNum - 1).setNotelistname(notelistname.getText().toString());
+					myNoteList.get(currentNum - 1).setNotelistname(
+							notelistname.getText().toString());
 				}
 			}
 			notelistname.setText("");// 加载前先清空文件名
 			// 加载下一张画板
-			loadMyView(CreateNoteActivity.this, Drawable.createFromPath(myNoteList.get(currentNum).getPicPath()), false);
+			loadMyView(CreateNoteActivity.this,
+					Drawable.createFromPath(myNoteList.get(currentNum)
+							.getPicPath()), false);
 			if (null != myNoteList.get(currentNum).getNotelistname()) {
-				notelistname.setText(myNoteList.get(currentNum).getNotelistname());
+				notelistname.setText(myNoteList.get(currentNum)
+						.getNotelistname());
 			}
 			// 刷新页码
 			flushCurrentPage(String.valueOf(currentNum + 1));
@@ -1107,7 +1129,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 	private void newSaveFile(String fileName) {
 		String saveFilePath = makeDir + fileName + ".png";
 		// 保存
-		new SaveImageThread(saveFilePath, getResources().getDrawable(getCurrentBackground()), NEW_FILE_SAVE).start();
+		new SaveImageThread(saveFilePath, getResources().getDrawable(
+				getCurrentBackground()), NEW_FILE_SAVE).start();
 
 	}
 
@@ -1118,13 +1141,14 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		// 保存当前页面画板
 		String saveFilePath = makeDir + fileName + ".png";
 		// 保存
-		new SaveImageThread(saveFilePath, getResources().getDrawable(getCurrentBackground()), UP_PAGE_FILE_SAVE)
-				.start();
+		new SaveImageThread(saveFilePath, getResources().getDrawable(
+				getCurrentBackground()), UP_PAGE_FILE_SAVE).start();
 	}
 
 	// 检测sdcard状态
 	private boolean storageStatus() {
-		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+		if (!Environment.MEDIA_MOUNTED.equals(Environment
+				.getExternalStorageState())) {
 			return false;
 		}
 		return true;
@@ -1167,20 +1191,10 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		}
 	}
 
-	/*
-	 * 发送异步消息
-	 * 
-	 * @param msg
-	 */
 	private void sendMessage(Message msg) {
 		myHander.sendMessage(msg);
 	}
 
-	/*
-	 * 发送错误消息
-	 * 
-	 * @param errorInfo
-	 */
 	private void sendFailedMessage(String errorInfo) {
 		Message msg = new Message();
 		msg.what = MESSAGE_FLUSH_NOTE_PAGE_ERROR;
@@ -1205,7 +1219,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		seekBar.setMax(10);// 设置最大刻度
 		seekBar.setProgress(paintSize);// 设置当前刻度
 		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromTouch) {
 				System.out.println(" onProgressChanged progress = " + progress);
 				paintSize = progress;
 			}
@@ -1286,7 +1301,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 		_mCanvas.save(Canvas.ALL_SAVE_FLAG);
 		_mCanvas.restore();
 		/* 创建临时画布 */
-		mBitmapTmp = Bitmap.createBitmap(picAllViewWide, picAllViewHigh, Bitmap.Config.ARGB_8888);
+		mBitmapTmp = Bitmap.createBitmap(picAllViewWide, picAllViewHigh,
+				Bitmap.Config.ARGB_8888);
 		mCanvasTmp = new Canvas(mBitmapTmp);
 		/* 创建要保存的图片mBitmap */
 		// bit = BitmapFactory.decodeResource(getResources(),
@@ -1309,36 +1325,38 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			mBitmapTmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
 			fos.flush();
 			switch (type) {
-				case NEW_FILE_SAVE:
-					Message msg = new Message();
-					msg.what = MESSAGE_FLUSH_NOTE_PAGE_NEW_FILE_SAVE_OK;
-					Bundle b = new Bundle();
-					b.putString("path", f.getPath());
-					msg.setData(b);
-					myHander.sendMessage(msg);// 发送消息
-					break;
-				case FILE_REPLACE:
-					// Message msg1 = new Message();
-					// msg1.what = MESSAGE_FLUSH_NOTE_PAGE_FILE_REPLACE_OK;
-					// Bundle b1 = new Bundle();
-					// b1.putString("path", f.getPath());
-					// msg1.setData(b1);
-					// myHander.sendMessage(msg1);//发送消息
-					break;
-				case UP_PAGE_FILE_SAVE:
-					// //当前信息保存
-					MyNoteList noteList1 = new MyNoteList();
-					noteList1.setPicPath(f.getPath());
-					String myFileName = f.getName().substring(0, f.getName().lastIndexOf("."));
-					noteList1.setNotelistname(myFileName);
-					myNoteList.add(noteList1);
-					break;
-				default:
-					break;
+			case NEW_FILE_SAVE:
+				Message msg = new Message();
+				msg.what = MESSAGE_FLUSH_NOTE_PAGE_NEW_FILE_SAVE_OK;
+				Bundle b = new Bundle();
+				b.putString("path", f.getPath());
+				msg.setData(b);
+				myHander.sendMessage(msg);// 发送消息
+				break;
+			case FILE_REPLACE:
+				// Message msg1 = new Message();
+				// msg1.what = MESSAGE_FLUSH_NOTE_PAGE_FILE_REPLACE_OK;
+				// Bundle b1 = new Bundle();
+				// b1.putString("path", f.getPath());
+				// msg1.setData(b1);
+				// myHander.sendMessage(msg1);//发送消息
+				break;
+			case UP_PAGE_FILE_SAVE:
+				// //当前信息保存
+				MyNoteList noteList1 = new MyNoteList();
+				noteList1.setPicPath(f.getPath());
+				String myFileName = f.getName().substring(0,
+						f.getName().lastIndexOf("."));
+				noteList1.setNotelistname(myFileName);
+				myNoteList.add(noteList1);
+				break;
+			default:
+				break;
 			}
 
 		} catch (FileNotFoundException e) {
-			Log.d(SystemDef.Debug.TAG, TAG + " saveCanvasImage exception = " + e.getMessage());
+			Log.d(SystemDef.Debug.TAG, TAG + " saveCanvasImage exception = "
+					+ e.getMessage());
 			// myHander.sendEmptyMessage(MESSAGE_FLUSH_NOTE_PAGE_ERROR);
 			sendFailedMessage("图片处理失败");
 		} catch (IOException e) {
@@ -1351,7 +1369,9 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 				mBitmapTmp.recycle();// 释放临时bitmap
 			} catch (IOException e) {
 				// e.printStackTrace();
-				Log.d(SystemDef.Debug.TAG, TAG + " saveCanvasImage close exception = " + e.getMessage());
+				Log.d(SystemDef.Debug.TAG,
+						TAG + " saveCanvasImage close exception = "
+								+ e.getMessage());
 			}
 		}
 	}
@@ -1419,7 +1439,8 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			this.myViewIsEmptyView = myViewIsEmptyView;
 			this.setBackgroundDrawable(drawable);
 			_mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-			_mBitmap = Bitmap.createBitmap(picAllViewWide, picAllViewHigh, Bitmap.Config.ARGB_8888);
+			_mBitmap = Bitmap.createBitmap(picAllViewWide, picAllViewHigh,
+					Bitmap.Config.ARGB_8888);
 			// 保存一次一次绘制出来的图形
 			_mCanvas = new Canvas(_mBitmap);
 		}
@@ -1471,33 +1492,34 @@ public class CreateNoteActivity extends GraphicsActivity implements ColorPickerD
 			float y = event.getY();
 
 			switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					// 每次down下去重新new一个Path
-					_mPath = new Path();
-					// 每一次记录的路径对象是不一样的
-					dp = new DrawPath();
-					dp.path = _mPath;
-					dp.paint = _mPaint;
-					touch_start(x, y);
-					invalidate();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					touch_move(x, y);
-					invalidate();
-					break;
-				case MotionEvent.ACTION_UP:
-					if (null != popuWindow && popuWindow.isShowing()) {
-						popuWindow.dismiss();
-					}
-					if (imm.isActive()) {
-						imm.hideSoftInputFromWindow(CreateNoteActivity.this.getCurrentFocus().getWindowToken(),
-								InputMethodManager.HIDE_NOT_ALWAYS);
-					}
-					// 只要有触摸事件，则表示当前view已经被编辑
-					this.myViewIsEdit = true;
-					touch_up();
-					invalidate();
-					break;
+			case MotionEvent.ACTION_DOWN:
+				// 每次down下去重新new一个Path
+				_mPath = new Path();
+				// 每一次记录的路径对象是不一样的
+				dp = new DrawPath();
+				dp.path = _mPath;
+				dp.paint = _mPaint;
+				touch_start(x, y);
+				invalidate();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				touch_move(x, y);
+				invalidate();
+				break;
+			case MotionEvent.ACTION_UP:
+				if (null != popuWindow && popuWindow.isShowing()) {
+					popuWindow.dismiss();
+				}
+				if (imm.isActive()) {
+					imm.hideSoftInputFromWindow(CreateNoteActivity.this
+							.getCurrentFocus().getWindowToken(),
+							InputMethodManager.HIDE_NOT_ALWAYS);
+				}
+				// 只要有触摸事件，则表示当前view已经被编辑
+				this.myViewIsEdit = true;
+				touch_up();
+				invalidate();
+				break;
 			}
 			return true;
 		}

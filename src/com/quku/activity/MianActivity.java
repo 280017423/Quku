@@ -38,8 +38,7 @@ import com.quku.note2.MyDialog;
 /**
  * 主界面activity
  * 
- * @author Administrator
- * 
+ * @author zou.sq
  */
 public class MianActivity extends Activity implements OnClickListener {
 	private static final int WINDOWMANAGER_LAYOUT_PARAM_INIT = 1;// 悬浮框初使化标记
@@ -49,7 +48,6 @@ public class MianActivity extends Activity implements OnClickListener {
 	private static final int RECORD_MESSAGE_RECORD_STOP_RENAME = 5;// 修改文件名后，刷新录音label
 
 	private MyDialog myAlertDialog;
-	private SharedPreferences systemPreference;
 	private Context mContext;
 	/** 录音操作定义 */
 	private WindowManager wm;
@@ -57,8 +55,8 @@ public class MianActivity extends Activity implements OnClickListener {
 	private Button openRecord;
 	private TextView floatViewTime;
 	private View recordView;// 录音操作view
-	private WindowManager.LayoutParams wmParams = null;
-	public static int recordStatus = 0;// 录音状态
+	private WindowManager.LayoutParams wmParams;
+	public static int recordStatus;// 录音状态
 	private TextView recordStatusText;
 	private TextView recordTimer;
 	private TextView recordSaveFile;
@@ -67,9 +65,9 @@ public class MianActivity extends Activity implements OnClickListener {
 	private Button recordStop;// 停止录音
 	private Button end2Play;// 录音结束后播放
 	private Button recordViewHide;// 录音布局隐藏
-	private int second = 0;// 秒
-	private int minute = 0;// 分钟
-	private int hours = 0;// 小时
+	private int second;// 秒
+	private int minute;// 分钟
+	private int hours;// 小时
 	/** 计时器 **/
 	private Timer timer;
 	private MediaRecorder mMediaRecorder;
@@ -89,8 +87,6 @@ public class MianActivity extends Activity implements OnClickListener {
 	private void initVariables() {
 		mContext = this;
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		systemPreference = getSharedPreferences(
-				SystemDef.System.PREF_VERSION_NAME, MODE_PRIVATE);
 	}
 
 	@Override
@@ -411,7 +407,7 @@ public class MianActivity extends Activity implements OnClickListener {
 		case R.id.ibtn_operation:// 使用说明
 			hideRecordView();
 			startActivity(new Intent(MianActivity.this,
-					OpenWebViewActivity.class));
+					UserGuideActivity.class));
 			break;
 		case R.id.ibtn_create_compose:// 我的备忘录
 			hideRecordView();

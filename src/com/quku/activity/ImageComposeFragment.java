@@ -60,7 +60,7 @@ public class ImageComposeFragment extends BaseFragment implements
 		mLlHomeLayout = ((Button) paramView.findViewById(R.id.btn_home));
 		mLlLastLayout = ((Button) paramView.findViewById(R.id.btn_back));
 		mFileList = new ArrayList<File>();
-		mShelfAdapter = new ShelfAdapter(mAct, mFileList, this);
+		mShelfAdapter = new ShelfAdapter(getActivity(), mFileList, this);
 		mRgComposeType = ((RadioGroup) paramView
 				.findViewById(R.id.rgComposeType));
 		mLvCompose.setAdapter(mShelfAdapter);
@@ -135,8 +135,8 @@ public class ImageComposeFragment extends BaseFragment implements
 	}
 
 	public RadioButton addRadioButton(String paramString, int paramInt) {
-		RadioButton localRadioButton = (RadioButton) this.mAct
-				.getLayoutInflater().inflate(R.layout.rb_composetype, null);
+		RadioButton localRadioButton = (RadioButton) View.inflate(
+				getActivity(), R.layout.rb_composetype, null);
 		localRadioButton.setText(paramString);
 		this.mRgComposeType.addView(localRadioButton, paramInt);
 		RadioGroup.LayoutParams localLayoutParams = (RadioGroup.LayoutParams) localRadioButton
@@ -149,7 +149,7 @@ public class ImageComposeFragment extends BaseFragment implements
 	}
 
 	public void createAddIBtn() {
-		ImageButton localImageButton = new ImageButton(this.mAct);
+		ImageButton localImageButton = new ImageButton(getActivity());
 		localImageButton.setBackgroundResource(0);
 		localImageButton.setImageResource(R.drawable.composetype_add);
 		this.mRgComposeType.addView(localImageButton);
@@ -169,9 +169,10 @@ public class ImageComposeFragment extends BaseFragment implements
 	}
 
 	public void showAddDialog() {
-		AlertDialog.Builder localBuilder = new AlertDialog.Builder(this.mAct);
-		View localView = this.mAct.getLayoutInflater().inflate(
-				R.layout.dialog_new_dir, null);
+		AlertDialog.Builder localBuilder = new AlertDialog.Builder(
+				getActivity());
+		View localView = View.inflate(getActivity(), R.layout.dialog_new_dir,
+				null);
 		mEtAddCompose = ((EditText) localView.findViewById(R.id.etAddCompose));
 		mEtAddCompose.setText("");
 		localBuilder.setTitle("添加乐谱").setView(localView)
@@ -202,7 +203,7 @@ public class ImageComposeFragment extends BaseFragment implements
 			localFile.mkdir();
 			addRadioButton(localFile);
 		} else {
-			Toast.makeText(this.mAct, "目录已存在", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "目录已存在", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -213,7 +214,7 @@ public class ImageComposeFragment extends BaseFragment implements
 			lastStep();
 			break;
 		case R.id.btn_home:
-			mAct.finish();
+			getActivity().finish();
 			break;
 
 		default:
@@ -233,7 +234,7 @@ public class ImageComposeFragment extends BaseFragment implements
 
 	public void lastStep() {
 		if (mRootFile.getPath().equals(mCurrentDir.getPath())) {
-			Toast.makeText(mAct, "已经是根目录", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "已经是根目录", Toast.LENGTH_LONG).show();
 			return;
 		}
 		mCurrentDir = mCurrentDir.getParentFile();
@@ -248,11 +249,11 @@ public class ImageComposeFragment extends BaseFragment implements
 		}
 		if (file.isFile()) {
 			Intent intent = new Intent();
-			intent.setClass(mAct, PictureBrowers.class);
+			intent.setClass(getActivity(), PictureBrowers.class);
 			intent.putExtra("nameIndex", file.getName());
 			intent.putExtra("filename", file.getPath());
 			Log.d("aaa", file.getPath() + "---" + file.getName());
-			mAct.startActivity(intent);
+			getActivity().startActivity(intent);
 		} else {
 			Log.d("aaa", "当前的三级目录是：" + file.getPath());
 			Log.d("aaa", "==========点击之后==========");

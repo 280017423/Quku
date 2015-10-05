@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -25,7 +26,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
@@ -46,17 +46,19 @@ import com.quku.adapter.AutoSearchAdapter;
 import com.quku.adapter.MyComposeViewPagerAdapter;
 import com.quku.entity.MyFileInfo;
 
-public class MyMusicSheetActivity extends BaseActivity implements OnClickListener {
+public class MyMusicSheetActivity extends FragmentActivity implements
+		OnClickListener {
 
 	private static final String TAG = "MyMusicSheetActivity";
 	private static final int MESSAGE_SEARCHDATA_LOAD_FINISH = 1;// 加载完毕
 	private static final int MESSAGE_SEARCHDATA_LOAD_FLUSH = 2;// 加载刷新
-	int F = LayoutParams.FILL_PARENT;
+	int F = LayoutParams.MATCH_PARENT;
 	int W = LayoutParams.WRAP_CONTENT;
 	private static final int BUTTON_HEIGHT = 55;
 	private static final int BUTTON_WIDTH = 150;
 	/* 图片根目录地址 */
-	public String Url2 = Environment.getExternalStorageDirectory().getPath() + "/tflash/musicpaper/";
+	public String Url2 = Environment.getExternalStorageDirectory().getPath()
+			+ "/tflash/musicpaper/";
 	/* 作为文件地址缓存 */
 	public String UrlTemp;
 	public String UrlFirMenu;
@@ -81,7 +83,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 
 	public boolean fourclick = false;
 	// 提供数据的字符串数组
-	private String[] nations = { "china:123", "Chile:123", "Canada:123", "Australia:123" };
+	private String[] nations = { "china:123", "Chile:123", "Canada:123",
+			"Australia:123" };
 	// private List<String> searchList;//搜索文件数据
 	List<String> chineseList = new ArrayList<String>();
 	List<String> pinyinList = new ArrayList<String>();
@@ -102,7 +105,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 	private int mCurrentIndex;
 	private AnimationListener animationListener = new Animation.AnimationListener() {
 		public void onAnimationEnd(Animation paramAnimation) {
-			LinearLayout.LayoutParams localLayoutParams = (LinearLayout.LayoutParams) mIbTabLine.getLayoutParams();
+			LinearLayout.LayoutParams localLayoutParams = (LinearLayout.LayoutParams) mIbTabLine
+					.getLayoutParams();
 			localLayoutParams.setMargins(mCurrentIndex * tablineWidth, 0, 0, 0);
 			mIbTabLine.setLayoutParams(localLayoutParams);
 		}
@@ -118,10 +122,10 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case MESSAGE_SEARCHDATA_LOAD_FINISH:
-				case MESSAGE_SEARCHDATA_LOAD_FLUSH:
-					cAdapter.notifyDataSetChanged();
-					break;
+			case MESSAGE_SEARCHDATA_LOAD_FINISH:
+			case MESSAGE_SEARCHDATA_LOAD_FLUSH:
+				cAdapter.notifyDataSetChanged();
+				break;
 			}
 			super.handleMessage(msg);
 		}
@@ -133,15 +137,18 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 			Log.e("page", paramInt + "  onPageScrollStateChanged");
 		}
 
-		public void onPageScrolled(int paramInt1, float paramFloat, int paramInt2) {
-			Log.e("page", paramInt1 + "  onPageScrolled" + "  " + paramFloat + "==" + paramInt2);
+		public void onPageScrolled(int paramInt1, float paramFloat,
+				int paramInt2) {
+			Log.e("page", paramInt1 + "  onPageScrolled" + "  " + paramFloat
+					+ "==" + paramInt2);
 		}
 
 		public void onPageSelected(int paramInt) {
 			mCurrentPager = paramInt;
 			Log.e("page", paramInt + "  onPageSelected");
-			TranslateAnimation mTranslateAnim = new TranslateAnimation(mCurrentIndex * tablineWidth, paramInt
-					* mIbTabLine.getWidth(), 0.0F, 0.0F);
+			TranslateAnimation mTranslateAnim = new TranslateAnimation(
+					mCurrentIndex * tablineWidth, paramInt
+							* mIbTabLine.getWidth(), 0.0F, 0.0F);
 			mTranslateAnim.setAnimationListener(animationListener);
 			mIbTabLine.startAnimation(mTranslateAnim);
 			mCurrentIndex = paramInt;
@@ -166,16 +173,19 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 
 	private void setListener() {
 		mLlBack.setOnClickListener(this);
-		mAutoCompleteTextView.setOnEditorActionListener(new OnEditorActionListener() {
+		mAutoCompleteTextView
+				.setOnEditorActionListener(new OnEditorActionListener() {
 
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				return false;
-			}
-		});
+					@Override
+					public boolean onEditorAction(TextView v, int actionId,
+							KeyEvent event) {
+						return false;
+					}
+				});
 		mAutoCompleteTextView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				String fileName = mAutoCompleteTextView.getText().toString();
 				/**
 				 * 判断是文件还是文件夹 1、是文文件，直接获取文件信息 2、是文件夹，则获取文件夹下面的第一个文件
@@ -185,7 +195,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 					MyFileInfo myi = getFileInfoIntent(fileName, filePath);
 					if (null != myi) {
 						Intent intent = new Intent();
-						intent.setClass(MyMusicSheetActivity.this, PictureBrowers.class);
+						intent.setClass(MyMusicSheetActivity.this,
+								PictureBrowers.class);
 						intent.putExtra("nameIndex", myi.getFileIndex());
 						intent.putExtra("filename", myi.getFilePath());
 						MyMusicSheetActivity.this.startActivity(intent);
@@ -198,7 +209,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 					intent.setAction("android.intent.action.VIEW");
 					Uri content_url = Uri.parse("http://www.quku.so");
 					intent.setData(content_url);
-					intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+					intent.setClassName("com.android.browser",
+							"com.android.browser.BrowserActivity");
 					startActivity(intent);
 					mAutoCompleteTextView.setText("");
 				}
@@ -215,7 +227,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 		mAutoCompleteTextView.setAdapter(cAdapter);
 		mViewPager.setAdapter(mViewPagerAdapter);
 
-		LinearLayout.LayoutParams localLayoutParams = (LinearLayout.LayoutParams) this.mIbTabLine.getLayoutParams();
+		LinearLayout.LayoutParams localLayoutParams = (LinearLayout.LayoutParams) this.mIbTabLine
+				.getLayoutParams();
 		localLayoutParams.width = this.tablineWidth;
 		this.mIbTabLine.setLayoutParams(localLayoutParams);
 	}
@@ -228,8 +241,10 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 		mListFragment.add(pdfComposeFragment);
 		tablineWidth = (getWindowManager().getDefaultDisplay().getWidth() / 2);
 		mRootDirsList = new ArrayList<File>();
-		cAdapter = new AutoSearchAdapter<String>(this, R.layout.search_item, R.id.tvname, chineseList, pinyinList);
-		mViewPagerAdapter = new MyComposeViewPagerAdapter(getSupportFragmentManager(), mListFragment);
+		cAdapter = new AutoSearchAdapter<String>(this, R.layout.search_item,
+				R.id.tvname, chineseList, pinyinList);
+		mViewPagerAdapter = new MyComposeViewPagerAdapter(
+				getSupportFragmentManager(), mListFragment);
 	}
 
 	private void getRootDirs() {
@@ -273,7 +288,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 						MyFileInfo myi = getFileInfoIntent(name, filePath);
 						if (null != myi) {
 							Intent intent = new Intent();
-							intent.setClass(MyMusicSheetActivity.this, PictureBrowers.class);
+							intent.setClass(MyMusicSheetActivity.this,
+									PictureBrowers.class);
 							intent.putExtra("nameIndex", myi.getFileIndex());
 							intent.putExtra("filename", myi.getFilePath());
 							MyMusicSheetActivity.this.startActivity(intent);
@@ -291,15 +307,19 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 							int tempIndex = name.lastIndexOf(".");
 							nameIndex = name.substring(0, tempIndex);
 							// 得到文件名中数字
-							nameIndex = nameIndex.substring(nameIndex.lastIndexOf("-") + 1, nameIndex.length());
+							nameIndex = nameIndex.substring(
+									nameIndex.lastIndexOf("-") + 1,
+									nameIndex.length());
 						} else {// 不包含“-”，直接在目录中获取文件的索引号
-							nameIndex = String.valueOf(getFileIndex(picName, name));
+							nameIndex = String.valueOf(getFileIndex(picName,
+									name));
 						}
 					} catch (Exception e) {
 						nameIndex = "1";// 如果异常，直接赋值为1
 					}
 					Intent intent = new Intent();
-					intent.setClass(MyMusicSheetActivity.this, PictureBrowers.class);
+					intent.setClass(MyMusicSheetActivity.this,
+							PictureBrowers.class);
 					intent.putExtra("filename", picName);
 					intent.putExtra("nameIndex", nameIndex);
 					startActivity(intent);
@@ -332,7 +352,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 					}
 				}
 			} catch (Exception e) {
-				Log.d(SystemDef.Debug.TAG, TAG + "getFileIndex exception = " + e.getMessage());
+				Log.d(SystemDef.Debug.TAG, TAG + "getFileIndex exception = "
+						+ e.getMessage());
 				return 1;
 			}
 		}
@@ -370,23 +391,30 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 			File[] files = fileSource.listFiles();// 获取目录下所有文件和目录
 			for (File file1 : files) {// 遍历file数组,获取下面所有文件和目录
 				String sourceFilePath = file1.getPath();// 源文件的路径
-				if (file1.isFile() && (file1.getName().endsWith(".jpg") || file1.getName().endsWith(".png"))) {// 是文件
-					String fileName = file1.getName().substring(0, file1.getName().lastIndexOf("."));
+				if (file1.isFile()
+						&& (file1.getName().endsWith(".jpg") || file1.getName()
+								.endsWith(".png"))) {// 是文件
+					String fileName = file1.getName().substring(0,
+							file1.getName().lastIndexOf("."));
 					chineseList.add(fileName);
-					pinyinList.add(HanziToPinyin.getInstance().getPinYin(fileName));
+					pinyinList.add(HanziToPinyin.getInstance().getPinYin(
+							fileName));
 					fileMap.put(fileName, sourceFilePath);
 					String dirName = file1.getParentFile().getName();
 					// 加载文件上级的目录文件夹
-					if (!chineseList.contains(dirName) && !fileMap.containsKey(dirName)) {
+					if (!chineseList.contains(dirName)
+							&& !fileMap.containsKey(dirName)) {
 						chineseList.add(dirName);
-						pinyinList.add(HanziToPinyin.getInstance().getPinYin(dirName));
+						pinyinList.add(HanziToPinyin.getInstance().getPinYin(
+								dirName));
 						fileMap.put(dirName, file1.getParentFile().getPath());
 					}
 
 				} else {// 是目录
 					for (int i = 1000; i < 10000; i += 1000) {
 						if (chineseList.size() % i == 0) {
-							myHandler.sendEmptyMessage(MESSAGE_SEARCHDATA_LOAD_FLUSH);
+							myHandler
+									.sendEmptyMessage(MESSAGE_SEARCHDATA_LOAD_FLUSH);
 						}
 					}
 					explorerDir(sourceFilePath);// 递归方法(调用自身)
@@ -412,11 +440,15 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 					if (fileName.contains("-")) {// 包含“-”，根据文件名获取文件位置索引
 						// 判断是否包含"."
 						if (fileName.contains(".")) {// 先截取后缀名
-							fileName = fileName.substring(0, fileName.lastIndexOf("."));
+							fileName = fileName.substring(0,
+									fileName.lastIndexOf("."));
 						}
-						subName = fileName.substring(fileName.lastIndexOf("-") + 1, fileName.length());
+						subName = fileName.substring(
+								fileName.lastIndexOf("-") + 1,
+								fileName.length());
 					} else {// 不包含"-",将根据文件名获取文件在目录中的位置
-						subName = String.valueOf(getFileIndex(filePath, _myFile.getName()));
+						subName = String.valueOf(getFileIndex(filePath,
+								_myFile.getName()));
 					}
 				}
 			}
@@ -432,7 +464,8 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 			boolean flag = false;
 			for (File _file : _myFile.listFiles()) {
 				if (_file.isFile()
-						&& (_file.getName().contains(".jpg") || _file.getName().contains(".png")
+						&& (_file.getName().contains(".jpg") || _file.getName()
+								.contains(".png")
 								&& !_file.getName().endsWith("_origin.jpg"))) {
 					subName = String.valueOf(i);
 					filePath = _file.getPath();
@@ -470,12 +503,12 @@ public class MyMusicSheetActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.title_with_back_title_btn_left:
-				finish();
-				break;
+		case R.id.title_with_back_title_btn_left:
+			finish();
+			break;
 
-			default:
-				break;
+		default:
+			break;
 		}
 	}
 
